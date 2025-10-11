@@ -1,8 +1,22 @@
 import Link from "next/link"
-import { ArrowUpRight, Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { ArrowUpRight, Github, Linkedin, Mail, Twitter, Clock, Calendar, MapPin, Play } from "lucide-react"
 import { CommandPalette } from "@/components/command-palette"
+import { ProjectCard } from "@/components/project-card"
+import { ContactForm } from "@/components/contact-form"
+import { getFeaturedProjects } from "@/data/projects"
+import { getFeaturedArticles } from "@/data/articles"
+import { getFeaturedTalks } from "@/data/talks"
+import { getAllExperiences, getExperienceYears } from "@/data/experience"
+import { getFeaturedTestimonials } from "@/data/testimonials"
 
 export default function Home() {
+  const featuredProjects = getFeaturedProjects()
+  const featuredArticles = getFeaturedArticles()
+  const featuredTalks = getFeaturedTalks()
+  const experiences = getAllExperiences()
+  const yearsOfExperience = getExperienceYears()
+  const featuredTestimonials = getFeaturedTestimonials()
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <CommandPalette />
@@ -15,7 +29,7 @@ export default function Home() {
               <div className="text-2xl font-bold">
                 Guilherme <span className="text-pink">Pozo</span>
               </div>
-              <div className="text-sm text-muted mt-1">Tech Lead & SRE</div>
+              <div className="text-sm text-muted mt-1">Tech Lead & Senior Software Engineer</div>
             </Link>
 
             <nav className="space-y-6">
@@ -24,6 +38,12 @@ export default function Home() {
                 className="block text-muted hover:text-cyan transition-colors text-sm uppercase tracking-wider"
               >
                 About
+              </Link>
+              <Link
+                href="#now"
+                className="block text-muted hover:text-yellow transition-colors text-sm uppercase tracking-wider"
+              >
+                Now
               </Link>
               <Link
                 href="#experience"
@@ -42,6 +62,12 @@ export default function Home() {
                 className="block text-muted hover:text-orange transition-colors text-sm uppercase tracking-wider"
               >
                 Writing
+              </Link>
+              <Link
+                href="#speaking"
+                className="block text-muted hover:text-pink transition-colors text-sm uppercase tracking-wider"
+              >
+                Speaking
               </Link>
             </nav>
           </div>
@@ -82,27 +108,21 @@ export default function Home() {
         <main className="ml-64 flex-1">
           {/* Hero Section */}
           <section className="min-h-screen flex items-center px-16 py-20">
-            <div className="max-w-3xl">
-              <div className="text-sm text-yellow mb-4">Hey there, I'm Guilherme</div>
-              <h1 className="text-6xl font-bold mb-8 leading-tight text-balance">
-                Tech Lead building scalable cloud infrastructure and AI-powered solutions
+            <div className="max-w-3xl animate-fade-up">
+              <div className="text-sm text-yellow mb-4 animate-fade-in animate-delay-100">Hey there, I'm Guilherme</div>
+              <h1 className="text-6xl font-bold mb-8 leading-tight text-balance animate-fade-up animate-delay-200">
+                Tech Lead building <span className="gradient-text">scalable cloud applications</span> and AI-powered solutions
               </h1>
-              <p className="text-xl text-comment leading-relaxed mb-8">
+              <p className="text-xl text-comment leading-relaxed mb-8 animate-fade-up animate-delay-300">
                 Currently leading Digital & Full Stack LATAM at <span className="text-cyan">Johnson & Johnson</span>,
                 where I architect cloud solutions, drive DevOps excellence, and pioneer AI/Agentic automation across the
                 software development lifecycle.
               </p>
-              <div className="flex gap-4">
-                <Link
-                  href="#projects"
-                  className="px-6 py-3 bg-green text-background font-medium rounded-lg hover:bg-green/90 transition-colors"
-                >
+              <div className="flex gap-4 animate-fade-up animate-delay-400">
+                <Link href="#projects" className="btn-primary">
                   View my work
                 </Link>
-                <Link
-                  href="#contact"
-                  className="px-6 py-3 border border-border rounded-lg hover:border-purple hover:text-purple transition-colors"
-                >
+                <Link href="#contact" className="btn-secondary">
                   Get in touch
                 </Link>
               </div>
@@ -132,196 +152,169 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Now Section */}
+          <section id="now" className="px-16 py-20 border-t border-border">
+            <div className="max-w-3xl">
+              <h2 className="text-sm uppercase tracking-wider text-muted mb-8 animate-fade-up">What I'm doing now</h2>
+
+              <div className="space-y-6 animate-fade-up animate-delay-100">
+                <div className="p-6 border border-border rounded-lg">
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    🤖 AI/Agentic Automation at J&J
+                  </h3>
+                  <p className="text-comment leading-relaxed">
+                    Leading the implementation of LLM-powered automation across our software development lifecycle.
+                    Currently building intelligent agents for code review, testing, and deployment optimization.
+                  </p>
+                </div>
+
+                <div className="p-6 border border-border rounded-lg">
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    🌎 LATAM Communities of Practice
+                  </h3>
+                  <p className="text-comment leading-relaxed">
+                    Organizing and mentoring Communities of Practice across Latin America, focusing on
+                    Infrastructure & Cloud, Software Engineering, and Platform Engineering excellence.
+                  </p>
+                </div>
+
+                <div className="p-6 border border-border rounded-lg">
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    📚 Learning & Writing
+                  </h3>
+                  <p className="text-comment leading-relaxed">
+                    Deep diving into advanced Kubernetes patterns, exploring the latest in AI/ML tooling,
+                    and writing about scaling engineering teams. Always sharing knowledge through articles and talks.
+                  </p>
+                </div>
+
+                <div className="p-6 border border-border rounded-lg">
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    🛠️ Side Projects
+                  </h3>
+                  <p className="text-comment leading-relaxed">
+                    Building personal automation tools and experimenting with new technologies.
+                    Currently working on a developer productivity platform using AI agents.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 text-center">
+                <Link href="/now" className="btn-secondary">
+                  Read More
+                </Link>
+              </div>
+            </div>
+          </section>
+
           {/* Experience Section */}
           <section id="experience" className="px-16 py-20 border-t border-border">
-            <div className="max-w-3xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted mb-12">Experience</h2>
-
-              <div className="space-y-12">
-                <div className="group">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-pink transition-colors">
-                        Senior Software Engineer
-                      </h3>
-                      <div className="text-comment mt-1">Johnson & Johnson</div>
-                    </div>
-                    <div className="text-sm text-muted">Jul 2023 — Present</div>
-                  </div>
-                  <p className="text-comment leading-relaxed mb-3">
-                    Technical Leader for Digital & Full Stack LATAM chapter, overseeing cloud engineering, IaC,
-                    frontend/backend development, and DevOps/SRE practices. Core member of the AI/Agentic Automation
-                    workstream, driving adoption of LLMs and agent-based solutions across the SDLC.
-                  </p>
-                  <p className="text-comment leading-relaxed">
-                    Organize internal Communities of Practice, advancing technical expertise across LATAM chapters in
-                    Infrastructure & Cloud, Software Engineering, Developer Experience, and Platform Engineering.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <span className="px-3 py-1 bg-pink/10 text-pink rounded-full text-xs">Next.js</span>
-                    <span className="px-3 py-1 bg-purple/10 text-purple rounded-full text-xs">TypeScript</span>
-                    <span className="px-3 py-1 bg-cyan/10 text-cyan rounded-full text-xs">Python</span>
-                    <span className="px-3 py-1 bg-green/10 text-green rounded-full text-xs">IaC</span>
-                    <span className="px-3 py-1 bg-orange/10 text-orange rounded-full text-xs">Langflow</span>
-                    <span className="px-3 py-1 bg-yellow/10 text-yellow rounded-full text-xs">AI/LLMs</span>
-                  </div>
+            <div className="max-w-4xl">
+              <div className="flex items-center justify-between mb-12">
+                <h2 className="text-sm uppercase tracking-wider text-muted animate-fade-up">Experience</h2>
+                <div className="text-sm text-muted animate-fade-up animate-delay-100">
+                  {yearsOfExperience}+ years in tech
                 </div>
+              </div>
 
-                <div className="group">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-pink transition-colors">
-                        Site Reliability Engineer
-                      </h3>
-                      <div className="text-comment mt-1">Ambev Tech</div>
-                    </div>
-                    <div className="text-sm text-muted">Feb 2021 — Jul 2023</div>
-                  </div>
-                  <p className="text-comment leading-relaxed mb-3">
-                    Key member of the Cloud Transformation Core Team, designing and implementing enterprise-scale cloud
-                    architecture through Infrastructure as Code. Led migration of legacy infrastructure to modern
-                    cloud-first model.
-                  </p>
-                  <p className="text-comment leading-relaxed">
-                    Developed and maintained Terraform modules, Ansible roles, and CI/CD pipelines while ensuring
-                    alignment with global security and compliance policies.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <span className="px-3 py-1 bg-cyan/10 text-cyan rounded-full text-xs">Azure</span>
-                    <span className="px-3 py-1 bg-purple/10 text-purple rounded-full text-xs">Terraform</span>
-                    <span className="px-3 py-1 bg-green/10 text-green rounded-full text-xs">Kubernetes</span>
-                    <span className="px-3 py-1 bg-orange/10 text-orange rounded-full text-xs">Ansible</span>
-                    <span className="px-3 py-1 bg-pink/10 text-pink rounded-full text-xs">Azure DevOps</span>
-                  </div>
-                </div>
+              <div className="space-y-16">
+                {experiences.map((experience, index) => (
+                  <div
+                    key={experience.id}
+                    className={`group relative animate-fade-up animate-delay-${(index + 1) * 100}`}
+                  >
+                    {/* Timeline dot */}
+                    <div className="absolute left-0 top-6 w-3 h-3 bg-border rounded-full group-hover:bg-cyan transition-colors"></div>
+                    <div className="absolute left-1.5 top-9 w-px h-full bg-border"></div>
 
-                <div className="group">
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-pink transition-colors">
-                        Site Reliability Engineer
-                      </h3>
-                      <div className="text-comment mt-1">Quero Educação</div>
+                    <div className="ml-8">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground group-hover:text-cyan transition-colors">
+                              {experience.title}
+                            </h3>
+                            {experience.current && (
+                              <span className="px-2 py-1 bg-green/10 text-green rounded-full text-xs">
+                                Current
+                              </span>
+                            )}
+                            <span className="px-2 py-1 bg-purple/10 text-purple rounded-full text-xs">
+                              {experience.type}
+                            </span>
+                          </div>
+                          <div className="text-comment font-medium mb-1">{experience.company}</div>
+                          <div className="text-xs text-muted mb-4">{experience.location}</div>
+                        </div>
+                        <div className="text-sm text-muted">
+                          {new Date(experience.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} —{' '}
+                          {experience.current ? 'Present' : new Date(experience.endDate!).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                        </div>
+                      </div>
+
+                      <div className="space-y-3 mb-4">
+                        {experience.description.map((desc, descIndex) => (
+                          <p key={descIndex} className="text-comment leading-relaxed">
+                            {desc}
+                          </p>
+                        ))}
+                      </div>
+
+                      {experience.achievements.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-medium text-foreground mb-2">Key Achievements:</h4>
+                          <ul className="space-y-1">
+                            {experience.achievements.map((achievement, achIndex) => (
+                              <li key={achIndex} className="text-sm text-comment flex items-start gap-2">
+                                <span className="text-green mt-1">•</span>
+                                {achievement}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div className="flex flex-wrap gap-2">
+                        {experience.technologies.slice(0, 8).map((tech, techIndex) => (
+                          <span
+                            key={techIndex}
+                            className={`px-3 py-1 bg-${techIndex % 6 === 0 ? 'cyan' : techIndex % 6 === 1 ? 'purple' : techIndex % 6 === 2 ? 'green' : techIndex % 6 === 3 ? 'orange' : techIndex % 6 === 4 ? 'pink' : 'yellow'}/10 text-${techIndex % 6 === 0 ? 'cyan' : techIndex % 6 === 1 ? 'purple' : techIndex % 6 === 2 ? 'green' : techIndex % 6 === 3 ? 'orange' : techIndex % 6 === 4 ? 'pink' : 'yellow'} rounded-full text-xs`}
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {experience.technologies.length > 8 && (
+                          <span className="px-3 py-1 bg-muted/10 text-muted rounded-full text-xs">
+                            +{experience.technologies.length - 8} more
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-sm text-muted">Mar 2020 — Feb 2021</div>
                   </div>
-                  <p className="text-comment leading-relaxed mb-3">
-                    Member of the Global SRE Platform Team, designing and maintaining internal solutions and business
-                    unit-specific platforms. Provided comprehensive support to developers in IaC, cloud architectures,
-                    automation, and security.
-                  </p>
-                  <p className="text-comment leading-relaxed">
-                    Implemented observability solutions with Grafana and Prometheus, managed AWS multi-account
-                    environments, and built CI/CD pipelines for diverse applications and runtimes.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <span className="px-3 py-1 bg-orange/10 text-orange rounded-full text-xs">AWS</span>
-                    <span className="px-3 py-1 bg-purple/10 text-purple rounded-full text-xs">Terraform</span>
-                    <span className="px-3 py-1 bg-green/10 text-green rounded-full text-xs">EKS</span>
-                    <span className="px-3 py-1 bg-cyan/10 text-cyan rounded-full text-xs">Grafana</span>
-                    <span className="px-3 py-1 bg-pink/10 text-pink rounded-full text-xs">GitLab CI</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </section>
 
           {/* Projects Section */}
           <section id="projects" className="px-16 py-20 border-t border-border">
-            <div className="max-w-4xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted mb-12">Selected Projects</h2>
+            <div className="max-w-6xl">
+              <h2 className="text-sm uppercase tracking-wider text-muted mb-12 animate-fade-up">Selected Projects</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Link
-                  href="#"
-                  className="group block p-6 border border-border rounded-lg hover:border-cyan transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-cyan transition-colors">
-                      Project One
-                    </h3>
-                    <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-cyan transition-colors" />
+                {featuredProjects.map((project, index) => (
+                  <div
+                    key={project.id}
+                    className={`animate-fade-up animate-delay-${(index + 1) * 100}`}
+                  >
+                    <ProjectCard project={project} featured />
                   </div>
-                  <p className="text-comment text-sm leading-relaxed mb-4">
-                    A comprehensive platform for managing digital workflows. Built with modern web technologies and
-                    focused on user experience.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-xs text-cyan">Next.js</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-purple">TypeScript</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-pink">Tailwind</span>
-                  </div>
-                </Link>
+                ))}
+              </div>
 
-                <Link
-                  href="#"
-                  className="group block p-6 border border-border rounded-lg hover:border-purple transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-purple transition-colors">
-                      Project Two
-                    </h3>
-                    <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-purple transition-colors" />
-                  </div>
-                  <p className="text-comment text-sm leading-relaxed mb-4">
-                    An open-source tool for developers to streamline their workflow. Features real-time collaboration
-                    and advanced analytics.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-xs text-cyan">React</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-green">Node.js</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-purple">PostgreSQL</span>
-                  </div>
-                </Link>
-
-                <Link
-                  href="#"
-                  className="group block p-6 border border-border rounded-lg hover:border-green transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-green transition-colors">
-                      Project Three
-                    </h3>
-                    <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-green transition-colors" />
-                  </div>
-                  <p className="text-comment text-sm leading-relaxed mb-4">
-                    A design system and component library used by multiple teams. Emphasizes accessibility and
-                    consistency.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-xs text-cyan">React</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-orange">Storybook</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-pink">CSS</span>
-                  </div>
-                </Link>
-
-                <Link
-                  href="#"
-                  className="group block p-6 border border-border rounded-lg hover:border-orange transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-orange transition-colors">
-                      Project Four
-                    </h3>
-                    <ArrowUpRight className="w-5 h-5 text-muted group-hover:text-orange transition-colors" />
-                  </div>
-                  <p className="text-comment text-sm leading-relaxed mb-4">
-                    A mobile-first web application for content creators. Features advanced editing tools and real-time
-                    preview.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-xs text-green">Vue.js</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-orange">Firebase</span>
-                    <span className="text-xs text-muted">•</span>
-                    <span className="text-xs text-yellow">PWA</span>
-                  </div>
+              <div className="text-center mt-12">
+                <Link href="/projects" className="btn-secondary">
+                  View All Projects
                 </Link>
               </div>
             </div>
@@ -329,64 +322,198 @@ export default function Home() {
 
           {/* Writing Section */}
           <section id="writing" className="px-16 py-20 border-t border-border">
-            <div className="max-w-3xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted mb-12">Writing</h2>
+            <div className="max-w-4xl">
+              <h2 className="text-sm uppercase tracking-wider text-muted mb-12 animate-fade-up">Recent Writing</h2>
 
               <div className="space-y-8">
-                <Link href="#" className="group block">
-                  <div className="flex items-baseline justify-between mb-2">
-                    <h3 className="text-lg font-medium text-foreground group-hover:text-cyan transition-colors">
-                      Building Accessible Web Applications
-                    </h3>
-                    <span className="text-sm text-muted">2024</span>
-                  </div>
-                  <p className="text-comment text-sm">
-                    A comprehensive guide to creating inclusive digital experiences that work for everyone.
-                  </p>
-                </Link>
+                {featuredArticles.map((article, index) => (
+                  <Link
+                    key={article.id}
+                    href={`/blog/${article.slug}`}
+                    className={`group block hover-lift animate-fade-up animate-delay-${(index + 1) * 100}`}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className={`px-2 py-1 bg-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'}/10 text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} rounded-full text-xs`}>
+                            {article.category}
+                          </span>
+                          <div className="flex items-center gap-1 text-xs text-muted">
+                            <Clock className="w-3 h-3" />
+                            {article.readTime} min read
+                          </div>
+                        </div>
+                        <h3 className={`text-lg font-medium text-foreground group-hover:text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} transition-colors mb-2`}>
+                          {article.title}
+                        </h3>
+                        <p className="text-comment text-sm leading-relaxed">
+                          {article.description}
+                        </p>
+                      </div>
+                      <div className="flex flex-col items-end ml-6">
+                        <span className="text-sm text-muted mb-2">
+                          {new Date(article.publishedAt).getFullYear()}
+                        </span>
+                        <ArrowUpRight className={`w-5 h-5 text-muted group-hover:text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} transition-colors`} />
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {article.tags.slice(0, 4).map((tag, tagIndex) => (
+                        <span key={tagIndex} className="text-xs text-muted">
+                          {tag}{tagIndex < Math.min(article.tags.length, 4) - 1 && <span className="mx-1">•</span>}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                ))}
+              </div>
 
-                <Link href="#" className="group block">
-                  <div className="flex items-baseline justify-between mb-2">
-                    <h3 className="text-lg font-medium text-foreground group-hover:text-purple transition-colors">
-                      The Art of Component Design
-                    </h3>
-                    <span className="text-sm text-muted">2024</span>
-                  </div>
-                  <p className="text-comment text-sm">
-                    Thoughts on creating reusable, maintainable components that scale with your application.
-                  </p>
+              <div className="text-center mt-12">
+                <Link href="/blog" className="btn-secondary">
+                  View All Articles
                 </Link>
+              </div>
+            </div>
+          </section>
 
-                <Link href="#" className="group block">
-                  <div className="flex items-baseline justify-between mb-2">
-                    <h3 className="text-lg font-medium text-foreground group-hover:text-green transition-colors">
-                      Performance Optimization Techniques
+          {/* Speaking Section */}
+          <section id="speaking" className="px-16 py-20 border-t border-border">
+            <div className="max-w-5xl">
+              <h2 className="text-sm uppercase tracking-wider text-muted mb-12 animate-fade-up">Speaking & Workshops</h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {featuredTalks.map((talk, index) => (
+                  <div
+                    key={talk.id}
+                    className={`group p-6 border border-border rounded-lg hover-lift animate-fade-up animate-delay-${(index + 1) * 100}`}
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2 py-1 bg-${talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'}/10 text-${talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'} rounded-full text-xs`}>
+                          {talk.type}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        {talk.slides && (
+                          <Link
+                            href={talk.slides}
+                            className="text-muted hover:text-orange transition-colors"
+                            aria-label="View slides"
+                          >
+                            <ArrowUpRight className="w-4 h-4" />
+                          </Link>
+                        )}
+                        {talk.recording && (
+                          <Link
+                            href={talk.recording}
+                            className="text-muted hover:text-green transition-colors"
+                            aria-label="Watch recording"
+                          >
+                            <Play className="w-4 h-4" />
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+
+                    <h3 className={`text-lg font-semibold text-foreground group-hover:text-${talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'} transition-colors mb-2`}>
+                      {talk.title}
                     </h3>
-                    <span className="text-sm text-muted">2023</span>
+
+                    <p className="text-comment text-sm leading-relaxed mb-4">
+                      {talk.description}
+                    </p>
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-xs text-muted">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(talk.date).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-muted">
+                        <MapPin className="w-3 h-3" />
+                        {talk.event} • {talk.venue}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {talk.technologies.slice(0, 3).map((tech, techIndex) => (
+                        <span key={techIndex} className="text-xs text-muted">
+                          {tech}{techIndex < Math.min(talk.technologies.length, 3) - 1 && <span className="mx-1">•</span>}
+                        </span>
+                      ))}
+                      {talk.technologies.length > 3 && (
+                        <span className="text-xs text-muted">+{talk.technologies.length - 3} more</span>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-comment text-sm">
-                    Practical strategies for building fast, responsive web applications that delight users.
-                  </p>
+                ))}
+              </div>
+
+              <div className="text-center mt-12">
+                <Link href="/speaking" className="btn-secondary">
+                  View All Talks
                 </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials Section */}
+          <section className="px-16 py-20 border-t border-border">
+            <div className="max-w-5xl">
+              <h2 className="text-sm uppercase tracking-wider text-muted mb-12 text-center animate-fade-up">
+                What People Say
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {featuredTestimonials.map((testimonial, index) => (
+                  <div
+                    key={testimonial.id}
+                    className={`group p-6 border border-border rounded-lg hover-lift animate-fade-up animate-delay-${(index + 1) * 100}`}
+                  >
+                    <div className="mb-4">
+                      <p className="text-comment leading-relaxed italic">
+                        "{testimonial.content}"
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold text-foreground">{testimonial.name}</div>
+                        <div className="text-sm text-muted">{testimonial.title}</div>
+                        <div className="text-sm text-cyan">{testimonial.company}</div>
+                      </div>
+                      <div className="text-xs text-muted">
+                        {testimonial.relationship}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center mt-12">
+                <p className="text-sm text-muted">
+                  These testimonials represent real feedback from colleagues and collaborators.
+                </p>
               </div>
             </div>
           </section>
 
           {/* Contact Section */}
           <section id="contact" className="px-16 py-20 border-t border-border">
-            <div className="max-w-3xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted mb-8">Get In Touch</h2>
-              <p className="text-2xl text-comment leading-relaxed mb-8">
-                I'm always interested in hearing about new projects and opportunities. Whether you have a question or
-                just want to say hi, feel free to reach out.
-              </p>
-              <Link
-                href="mailto:hello@guilhermepozo.com"
-                className="inline-flex items-center gap-2 text-yellow hover:text-yellow/80 transition-colors text-lg"
-              >
-                hello@guilhermepozo.com
-                <ArrowUpRight className="w-5 h-5" />
-              </Link>
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-sm uppercase tracking-wider text-muted mb-6 animate-fade-up">Get In Touch</h2>
+                <p className="text-2xl text-comment leading-relaxed animate-fade-up animate-delay-100">
+                  I'm always interested in hearing about new projects and opportunities. Whether you have a question or
+                  just want to say hi, feel free to reach out.
+                </p>
+              </div>
+              <div className="animate-fade-up animate-delay-200">
+                <ContactForm />
+              </div>
             </div>
           </section>
 
