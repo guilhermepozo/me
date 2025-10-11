@@ -10,90 +10,80 @@ export interface Talk {
   technologies: string[]
   slides?: string
   recording?: string
+  image?: string
   featured: boolean
 }
 
 export const talks: Talk[] = [
   {
-    id: 'ai-automation-jnj',
-    title: 'Scaling AI/Agentic Automation in Enterprise Software Development',
-    description: 'How we implemented LLM-powered automation across the software development lifecycle at Johnson & Johnson, reducing development time by 40% while maintaining quality and security standards.',
-    event: 'DevOps World 2024',
-    venue: 'São Paulo Tech Hub',
-    date: '2024-09-15',
-    duration: 45,
-    type: 'Conference',
-    technologies: ['AI', 'LLMs', 'Langflow', 'DevOps', 'Automation'],
-    slides: '/talks/ai-automation-jnj-slides.pdf',
-    recording: 'https://youtu.be/example1',
-    featured: true
-  },
-  {
-    id: 'terraform-at-scale',
-    title: 'Infrastructure as Code at Scale: Terraform Best Practices',
-    description: 'Lessons learned from managing Terraform across 15+ countries at Ambev. Covering module design, state management, and governance strategies for large-scale deployments.',
-    event: 'HashiTalks Brasil',
-    venue: 'Virtual Event',
-    date: '2023-11-20',
-    duration: 30,
-    type: 'Conference',
-    technologies: ['Terraform', 'IaC', 'Cloud', 'DevOps', 'Governance'],
-    slides: '/talks/terraform-scale-slides.pdf',
-    recording: 'https://youtu.be/example2',
-    featured: true
-  },
-  {
-    id: 'kubernetes-production-workshop',
-    title: 'Kubernetes in Production: From Zero to Hero',
-    description: 'Hands-on workshop covering production-ready Kubernetes deployments, including security, monitoring, scaling, and disaster recovery strategies.',
-    event: 'KubeCon Brasil Meetup',
-    venue: 'São José dos Campos Tech Center',
-    date: '2023-08-10',
-    duration: 180,
+    id: 'ansible-vagrant-intro-workshop',
+    title: 'Introduction to Ansible and Vagrant',
+    description: 'Hands-on workshop covering the fundamentals of Ansible and Vagrant for infrastructure automation. Providing practical knowledge to test and practice new technologies quickly and safely in local environments, reducing manual tasks and increasing delivery quality through automation.',
+    event: 'PagTalks Meetup',
+    venue: 'PagBank',
+    date: '2020-01-15',
+    duration: 120,
     type: 'Workshop',
-    technologies: ['Kubernetes', 'Docker', 'Helm', 'Monitoring', 'Security'],
-    slides: '/talks/k8s-production-workshop.pdf',
+    technologies: ['Ansible', 'Vagrant', 'DevOps', 'IaC', 'Automation', 'VirtualBox', 'Configuration Management'],
+    slides: 'https://github.com/guilhermepozo/config-ansible-vagrant',
+    recording: 'https://www.linkedin.com/posts/guilhermepozo_devops-iac-vagrant-activity-6629046392163745792-Rsw9',
     featured: true
   },
   {
-    id: 'platform-engineering-journey',
-    title: 'Building Internal Developer Platforms: A Journey',
-    description: 'How we transformed developer experience by building comprehensive internal platforms. Covering the evolution from manual processes to self-service infrastructure.',
-    event: 'Platform Engineering Summit',
-    venue: 'Rio de Janeiro Convention Center',
-    date: '2023-05-25',
-    duration: 40,
-    type: 'Conference',
-    technologies: ['Platform Engineering', 'DevOps', 'Developer Experience', 'Automation'],
-    slides: '/talks/platform-engineering-slides.pdf',
+    id: 'sre-ambev-tech-interview',
+    title: 'What does an SRE do at Ambev Tech',
+    description: 'An in-depth conversation about Site Reliability Engineering at Ambev Tech. Exploring SRE as a software engineering approach to IT operations, discussing the role, responsibilities, and how SRE practices enable reliability and scalability in a high-performance technology environment.',
+    event: 'Expert Talk - Ambev Tech',
+    venue: 'Ambev Tech Blog',
+    date: '2021-06-15',
+    duration: 30,
+    type: 'Internal',
+    technologies: ['SRE', 'Site Reliability', 'DevOps', 'Operations', 'Engineering', 'Scalability', 'Reliability'],
+    slides: 'https://www.ambevtech.com.br/news/tecnologia/o-que-faz-um-sre-na-ambev-tech',
+    recording: 'https://www.youtube.com/watch?v=5JG8cZeurJQ',
     featured: true
   },
   {
-    id: 'observability-microservices',
-    title: 'Observability in Microservices: Beyond Monitoring',
-    description: 'Deep dive into implementing comprehensive observability across microservice architectures. Covering metrics, logs, traces, and incident response.',
-    event: 'Microservices São Paulo',
-    venue: 'São Paulo Innovation Center',
-    date: '2022-10-15',
-    duration: 35,
-    type: 'Meetup',
-    technologies: ['Observability', 'Microservices', 'Prometheus', 'Grafana', 'Jaeger'],
-    slides: '/talks/observability-microservices-slides.pdf',
-    featured: false
-  },
-  {
-    id: 'cloud-migration-strategies',
-    title: 'Cloud Migration Strategies for Legacy Applications',
-    description: 'Practical approaches to migrating legacy applications to the cloud. Real-world case studies and lessons learned from enterprise transformations.',
-    event: 'AWS Community Day',
-    venue: 'Campinas Tech Hub',
-    date: '2022-07-30',
+    id: 'iac-base-startups-tdc-2021',
+    title: 'IaC as Startups Foundation',
+    description: 'How Terraform and Terragrunt enable startups to build scalable, secure, and maintainable infrastructure on AWS. Covering repository structure, Terragrunt for shared standards, state management best practices, and CI/CD automation to create a solid foundation for growth.',
+    event: 'The Developers Conference (TDC) - Transformation',
+    venue: 'Ambev Tech',
+    date: '2021-12-08',
     duration: 45,
     type: 'Conference',
-    technologies: ['AWS', 'Cloud Migration', 'Legacy Systems', 'Architecture'],
-    slides: '/talks/cloud-migration-slides.pdf',
-    featured: false
-  }
+    technologies: ['Terraform', 'Terragrunt', 'AWS', 'IaC', 'DevOps', 'Cloud', 'CI/CD', 'Startups', 'State Management', 'Architecture'],
+    slides: 'https://github.com/tdc-pozo-2021',
+    recording: 'https://promo.thedevconf.com/transformation-ambev-tech',
+    image: '/tdc.jpeg',
+    featured: true
+  },
+  {
+    id: 'ai-ts-latam-podcast-ep3',
+    title: 'Is AI all you need? - TS LATAM Podcast Episode 3',
+    description: 'Exploring the emergence of AI, various platforms and tools available in the market, practical use cases, and how AI agents can streamline development processes.',
+    event: 'TS LATAM Podcast - Episode 3',
+    venue: 'Technology Podcast',
+    date: '2025-07-01',
+    duration: 60,
+    type: 'Internal',
+    technologies: ['AI', 'Artificial Intelligence', 'Machine Learning', 'Technology', 'Development', 'Innovation', 'Automation'],
+    image: '/ai-talk-ep3.png',
+    featured: true
+  },
+  {
+    id: 'ai-professional-profiles-ts-latam-ep4',
+    title: 'Do you have what it takes to work with AI? - TS LATAM Podcast Episode 4',
+    description: 'Exploring essential professional profiles for AI engineers and developers, plus controversial topics including environmental impact and intellectual property in AI.',
+    event: 'TS LATAM Podcast - Episode 4',
+    venue: 'Technology Podcast',
+    date: '2025-08-04',
+    duration: 60,
+    type: 'Webinar',
+    technologies: ['AI', 'Artificial Intelligence', 'Professional Development', 'Ethics', 'Sustainability', 'Intellectual Property', 'Career Development'],
+    image: '/ai-talk-ep4.png',
+    featured: true
+  },
 ]
 
 export const getFeaturedTalks = (): Talk[] => {

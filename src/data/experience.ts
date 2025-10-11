@@ -1,7 +1,7 @@
 export interface Experience {
   id: string
   title: string
-  company: string
+  company: { name: string; link: string | null }
   location: string
   startDate: string
   endDate?: string
@@ -16,7 +16,7 @@ export const experiences: Experience[] = [
   {
     id: 'jnj-senior-swe',
     title: 'Senior Software Engineer',
-    company: 'Johnson & Johnson',
+    company: { name: 'Johnson & Johnson', link: 'https://www.jnj.com/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2023-07',
     current: true,
@@ -40,7 +40,7 @@ export const experiences: Experience[] = [
   {
     id: 'ambev-sre',
     title: 'Site Reliability Engineer',
-    company: 'Ambev Tech',
+    company: { name: 'Ambev Tech', link: 'https://www.ambevtech.com.br/' },
     location: 'Remote, Brazil',
     startDate: '2021-02',
     endDate: '2023-07',
@@ -64,7 +64,7 @@ export const experiences: Experience[] = [
   {
     id: 'quero-sre',
     title: 'Site Reliability Engineer',
-    company: 'Quero Educação',
+    company: { name: 'Quero Educação', link: 'https://sobre.quero.com/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2020-03',
     endDate: '2021-02',
@@ -87,7 +87,7 @@ export const experiences: Experience[] = [
   {
     id: 'sonda-devops-consultant',
     title: 'DevOps Consultant',
-    company: 'Sonda Ativas',
+    company: { name: 'Sonda Ativas', link: 'https://www.sonda.com/pt/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2019-09',
     endDate: '2020-03',
@@ -100,9 +100,6 @@ export const experiences: Experience[] = [
     ],
     achievements: [
       'Advanced DevOps culture across enterprise environments',
-      'Implemented process automation reducing manual overhead by 60%',
-      'Optimized tooling and infrastructure operations',
-      'Established incident-driven improvement processes',
       'Promoted collaboration and technical excellence across teams'
     ],
     technologies: ['Ansible', 'Python', 'Bash', 'Bitbucket', 'Bamboo', 'Azure DevOps', 'Nexus', 'SonarQube', 'Red Hat', 'CentOS']
@@ -110,7 +107,7 @@ export const experiences: Experience[] = [
   {
     id: 'brasil317-software-developer',
     title: 'Software Developer',
-    company: 'Brasil 317',
+    company: { name: 'Brasil 317', link: 'https://www.brasil317.com.br/' }  ,
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2019-04',
     endDate: '2019-09',
@@ -134,7 +131,7 @@ export const experiences: Experience[] = [
   {
     id: 'embraer-it-assistant',
     title: 'Information Technology Assistant',
-    company: 'Embraer',
+    company: { name: 'Embraer', link: 'https://www.embraer.com/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2017-03',
     endDate: '2019-04',
@@ -158,7 +155,7 @@ export const experiences: Experience[] = [
   {
     id: 'embraer-intern',
     title: 'Intern',
-    company: 'Embraer',
+    company: { name: 'Embraer', link: 'https://www.embraer.com/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2016-04',
     endDate: '2017-03',
@@ -182,26 +179,22 @@ export const experiences: Experience[] = [
   {
     id: 'acs-support-analyst',
     title: 'Support Analyst',
-    company: 'ACS Info',
+    company: { name: 'ACS Info', link: null },
     location: 'Jacareí, Brazil',
     startDate: '2015-04',
     endDate: '2015-11',
     current: false,
     type: 'Full-time',
     description: [
-      'Delivered end-to-end solutions for Infor/Lawson products while leading the design and development of innovative web, mobile, and marketing projects.',
       'Provided technical support and ensured seamless product integration for clients across the USA.',
-      'Worked with a broad technology stack including AWS, Windows Server, SQL Server, PowerShell, and Python to maintain high-performing systems.',
-      'Led marketing and media initiatives using the Adobe Creative Suite, delivering impactful visual and interactive solutions.'
+      'Worked with a broad technology stack including AWS, Windows Server, SQL Server, PowerShell maintain high-performing systems.',
     ],
     achievements: [
       'Delivered comprehensive Infor/Lawson solutions for US clients',
-      'Designed innovative web and mobile applications',
       'Maintained high-performing systems across diverse technology stack',
-      'Led successful marketing initiatives with Adobe Creative Suite',
       'Ensured seamless product integration and client satisfaction'
     ],
-    technologies: ['Infor/Lawson', 'AWS', 'Windows Server', 'SQL Server', 'PowerShell', 'Python', 'Adobe Creative Suite']
+    technologies: ['Infor/Lawson', 'AWS', 'Windows Server', 'SQL Server', 'PowerShell', 'Adobe Creative Suite']
   }
 ]
 
@@ -210,7 +203,7 @@ export const getCurrentExperience = (): Experience | undefined => {
 }
 
 export const getExperienceByCompany = (company: string): Experience[] => {
-  return experiences.filter(exp => exp.company.toLowerCase().includes(company.toLowerCase()))
+  return experiences.filter(exp => exp.company.name.toLowerCase().includes(company.toLowerCase()))
 }
 
 export const getAllExperiences = (): Experience[] => {

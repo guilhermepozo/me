@@ -36,12 +36,6 @@ export const metadata: Metadata = {
     description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence.",
     siteName: "Guilherme Pozo",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Guilherme Pozo - Tech Lead & SRE",
-    description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence.",
-    creator: "@guilhermepozo",
-  },
   robots: {
     index: true,
     follow: true,
