@@ -60,7 +60,7 @@ export const talks: Talk[] = [
   },
   {
     id: 'ai-ts-latam-podcast-ep3',
-    title: 'Is AI all you need? - TS LATAM Podcast Episode 3',
+    title: 'Is AI all you need?',
     description: 'Exploring the emergence of AI, various platforms and tools available in the market, practical use cases, and how AI agents can streamline development processes.',
     event: 'TS LATAM Podcast - Episode 3',
     venue: 'Technology Podcast',
@@ -73,7 +73,7 @@ export const talks: Talk[] = [
   },
   {
     id: 'ai-professional-profiles-ts-latam-ep4',
-    title: 'Do you have what it takes to work with AI? - TS LATAM Podcast Episode 4',
+    title: 'Do you have what it takes to work with AI?',
     description: 'Exploring essential professional profiles for AI engineers and developers, plus controversial topics including environmental impact and intellectual property in AI.',
     event: 'TS LATAM Podcast - Episode 4',
     venue: 'Technology Podcast',

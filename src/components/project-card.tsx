@@ -69,7 +69,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
           </div>
 
           {/* Title and Description */}
-          <h3 className={`text-xl font-semibold text-foreground group-hover:text-${categoryColor}-500 transition-colors mb-3`}>
+          <h3 className="text-xl font-semibold text-foreground group-hover:text-green transition-colors mb-3">
             {project.title}
           </h3>
 
@@ -225,7 +225,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${project.id}`}
-      className="group block p-6 border border-border rounded-lg hover-lift animate-fade-up transition-all duration-300 hover:border-${categoryColor}-300"
+      className="group block p-6 border border-border rounded-lg hover-lift animate-fade-up transition-all duration-300 hover:border-green"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
@@ -237,10 +237,10 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
             {project.status}
           </span>
         </div>
-        <ArrowUpRight className={`w-5 h-5 text-muted-foreground group-hover:text-${categoryColor}-500 transition-colors`} />
+        <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-green transition-colors" />
       </div>
 
-      <h3 className={`text-xl font-semibold text-foreground group-hover:text-${categoryColor}-500 transition-colors mb-3`}>
+      <h3 className="text-xl font-semibold text-foreground group-hover:text-green transition-colors mb-3">
         {project.title}
       </h3>
 
