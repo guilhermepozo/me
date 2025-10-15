@@ -339,7 +339,7 @@ export default function Home() {
                 software development lifecycle.
               </p>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 animate-fade-up animate-delay-400">
-                <Link href="#projects" className="btn-primary text-center">
+                <Link href="#experience" className="btn-primary text-center">
                   View my works
                 </Link>
                 <button
