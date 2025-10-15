@@ -47,35 +47,79 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
   if (featured) {
     return (
-      <div className="group relative overflow-hidden rounded-lg border border-border bg-card hover-lift animate-fade-up">
+      <div className={`group relative overflow-hidden rounded-lg border bg-card transition-all duration-500 ease-out ${
+        isExpanded
+          ? 'border-green scale-[1.02]'
+          : 'border-border hover:border-green/50 hover-lift cursor-pointer'
+      }`}
+      onClick={() => setIsExpanded(!isExpanded)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setIsExpanded(!isExpanded)
+        }
+      }}
+      aria-expanded={isExpanded}
+      aria-label={`${isExpanded ? 'Collapse' : 'Expand'} project details for ${project.title}`}
+      >
         <div className="p-6">
+          {/* Expandable indicator - visible on mobile only */}
+          <div className={`absolute top-2 right-2 sm:hidden transition-all duration-300 ${
+            isExpanded ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+          }`}>
+            <div className="flex items-center gap-1 px-2 py-1 bg-green/10 text-green rounded-full text-xs animate-pulse">
+              <span>Tap to expand</span>
+              <ChevronDown className="w-3 h-3" />
+            </div>
+          </div>
+
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <span className={`px-3 py-1.5 bg-${categoryColor}-50 text-${categoryColor}-700 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 rounded-full text-xs font-medium flex items-center gap-1.5`}>
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className={`px-3 py-1.5 bg-${categoryColor}-50 text-${categoryColor}-700 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 rounded-full text-xs font-medium flex items-center gap-1.5 transition-all duration-300 ${
+                isExpanded ? 'scale-110' : ''
+              }`}>
                 <CategoryIcon className="w-3 h-3" />
                 {project.category}
               </span>
-              <span className={`px-2 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 rounded-full text-xs`}>
+              <span className={`px-2 py-1 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 rounded-full text-xs transition-all duration-300 ${
+                isExpanded ? 'scale-110' : ''
+              }`}>
                 {project.status}
               </span>
             </div>
             <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className={`w-8 h-8 rounded-full bg-${categoryColor}-50 text-${categoryColor}-700 hover:bg-${categoryColor}-100 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 dark:hover:bg-${categoryColor}-900 transition-colors flex items-center justify-center`}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsExpanded(!isExpanded)
+              }}
+              className={`w-10 h-10 rounded-full transition-all duration-300 flex items-center justify-center flex-shrink-0 cursor-pointer ${
+                isExpanded
+                  ? 'bg-green text-background rotate-180 scale-110'
+                  : `bg-${categoryColor}-50 text-${categoryColor}-700 hover:bg-${categoryColor}-100 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 dark:hover:bg-${categoryColor}-900 hover:scale-110`
+              }`}
+              aria-label={isExpanded ? 'Collapse details' : 'Expand details'}
             >
-              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              <ChevronDown className="w-5 h-5" />
             </button>
           </div>
 
           {/* Title and Description */}
-          <h3 className="text-xl font-semibold text-foreground group-hover:text-green transition-colors mb-3">
+          <h3 className={`text-xl font-semibold transition-all duration-300 mb-3 ${
+            isExpanded ? 'text-green' : 'text-foreground group-hover:text-green'
+          }`}>
             {project.title}
           </h3>
 
-          <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-            {isExpanded ? project.longDescription : project.description}
-          </p>
+          <div className="overflow-hidden transition-all duration-500 ease-in-out">
+            <p className={`text-muted-foreground text-sm leading-relaxed mb-4 transition-all duration-500 ${
+              isExpanded ? 'opacity-100' : 'opacity-90'
+            }`}>
+              {isExpanded ? project.longDescription : project.description}
+            </p>
+          </div>
 
           {/* Timeline */}
           <div className="flex items-center gap-2 mb-4">
@@ -85,9 +129,17 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
           {/* Metrics Grid */}
           {project.metrics && (
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className={`grid grid-cols-2 gap-4 mb-6 transition-all duration-500 ${
+              isExpanded ? 'opacity-100 scale-100' : 'opacity-90 scale-95'
+            }`}>
               {(isExpanded ? project.metrics : project.metrics.slice(0, 2)).map((metric, index) => (
-                <div key={index} className="text-center p-3 rounded-lg bg-background/50">
+                <div
+                  key={index}
+                  className={`text-center p-3 rounded-lg bg-background/50 transition-all duration-300 hover:bg-background/80 hover:scale-105 ${
+                    isExpanded ? 'border border-green/20' : ''
+                  }`}
+                  style={{ transitionDelay: isExpanded ? `${index * 50}ms` : '0ms' }}
+                >
                   <div className={`text-lg font-semibold text-${categoryColor}-500 mb-1`}>
                     {metric.value}
                   </div>
@@ -104,10 +156,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
           )}
 
           {/* Technologies */}
-          <div className="mb-4">
+          <div className={`mb-4 transition-all duration-500 ${
+            isExpanded ? 'mb-6' : ''
+          }`}>
             <div className="flex flex-wrap gap-2">
               {(isExpanded ? project.technologies : project.technologies.slice(0, 4)).map((tech, index) => (
-                <span key={index} className="text-xs bg-background/50 text-foreground px-2 py-1 rounded border">
+                <span
+                  key={index}
+                  className={`text-xs bg-background/50 text-foreground px-2 py-1 rounded border transition-all duration-300 hover:border-green hover:bg-green/5 ${
+                    isExpanded ? 'border-green/30' : 'border-border'
+                  }`}
+                  style={{ transitionDelay: isExpanded ? `${index * 30}ms` : '0ms' }}
+                >
                   {tech}
                 </span>
               ))}
@@ -118,18 +178,24 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
           </div>
 
           {/* Expanded Content */}
-          {isExpanded && (
-            <div className="space-y-6 animate-fade-up">
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+            isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+          }`}>
+            <div className="space-y-6 pt-4 border-t border-green/20">
               {/* Key Outcomes */}
               {project.outcomes && project.outcomes.length > 0 && (
-                <div>
+                <div className="animate-slide-up" style={{ animationDelay: '100ms' }}>
                   <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle className="w-4 h-4 text-emerald-600 animate-bounce-in" />
                     Key Outcomes
                   </h4>
                   <ul className="space-y-2">
                     {project.outcomes.map((outcome, index) => (
-                      <li key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li
+                        key={index}
+                        className="text-xs text-muted-foreground flex items-start gap-2 animate-slide-in-right"
+                        style={{ animationDelay: `${150 + index * 50}ms` }}
+                      >
                         <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full mt-1.5 flex-shrink-0" />
                         {outcome}
                       </li>
@@ -140,14 +206,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
               {/* Highlights */}
               {project.highlights && project.highlights.length > 0 && (
-                <div>
+                <div className="animate-slide-up" style={{ animationDelay: '200ms' }}>
                   <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <Lightbulb className={`w-4 h-4 text-${categoryColor}-500`} />
+                    <Lightbulb className={`w-4 h-4 text-${categoryColor}-500 animate-bounce-in`} />
                     Key Highlights
                   </h4>
                   <ul className="space-y-2">
                     {project.highlights.map((highlight, index) => (
-                      <li key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li
+                        key={index}
+                        className="text-xs text-muted-foreground flex items-start gap-2 animate-slide-in-right"
+                        style={{ animationDelay: `${250 + index * 50}ms` }}
+                      >
                         <div className={`w-1.5 h-1.5 bg-${categoryColor}-500 rounded-full mt-1.5 flex-shrink-0`} />
                         {highlight}
                       </li>
@@ -158,14 +228,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
               {/* Challenges */}
               {project.challenges && project.challenges.length > 0 && (
-                <div>
+                <div className="animate-slide-up" style={{ animationDelay: '300ms' }}>
                   <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-orange-500" />
+                    <AlertTriangle className="w-4 h-4 text-orange-500 animate-bounce-in" />
                     Challenges
                   </h4>
                   <ul className="space-y-2">
                     {project.challenges.map((challenge, index) => (
-                      <li key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li
+                        key={index}
+                        className="text-xs text-muted-foreground flex items-start gap-2 animate-slide-in-right"
+                        style={{ animationDelay: `${350 + index * 50}ms` }}
+                      >
                         <div className="w-1.5 h-1.5 bg-orange-500 rounded-full mt-1.5 flex-shrink-0" />
                         {challenge}
                       </li>
@@ -176,14 +250,18 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
               {/* Learnings */}
               {project.learnings && project.learnings.length > 0 && (
-                <div>
+                <div className="animate-slide-up" style={{ animationDelay: '400ms' }}>
                   <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <BookOpen className="w-4 h-4 text-blue-500" />
+                    <BookOpen className="w-4 h-4 text-blue-500 animate-bounce-in" />
                     Key Learnings
                   </h4>
                   <ul className="space-y-2">
                     {project.learnings.map((learning, index) => (
-                      <li key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <li
+                        key={index}
+                        className="text-xs text-muted-foreground flex items-start gap-2 animate-slide-in-right"
+                        style={{ animationDelay: `${450 + index * 50}ms` }}
+                      >
                         <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0" />
                         {learning}
                       </li>
@@ -194,7 +272,7 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
 
               {/* Links */}
               {project.links && project.links.length > 0 && (
-                <div>
+                <div className="animate-slide-up" style={{ animationDelay: '500ms' }}>
                   <h4 className="text-sm font-semibold text-foreground mb-3">Links</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.links.map((link, index) => {
@@ -203,9 +281,10 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
                         <Link
                           key={index}
                           href={link.url}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-${categoryColor}-50 text-${categoryColor}-700 hover:bg-${categoryColor}-100 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 dark:hover:bg-${categoryColor}-900 rounded text-xs transition-colors`}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-${categoryColor}-50 text-${categoryColor}-700 hover:bg-${categoryColor}-100 dark:bg-${categoryColor}-950 dark:text-${categoryColor}-300 dark:hover:bg-${categoryColor}-900 rounded text-xs transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 animate-bounce-in`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          style={{ animationDelay: `${550 + index * 50}ms` }}
                         >
                           <LinkIcon className="w-3 h-3" />
                           {link.label}
@@ -215,6 +294,19 @@ export function ProjectCard({ project, featured = false }: ProjectCardProps) {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+
+          {/* Bottom expand indicator - only when collapsed and on mobile */}
+          {!isExpanded && (
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none sm:hidden">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce">
+                <div className="flex gap-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green animate-pulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-green animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
             </div>
           )}
         </div>

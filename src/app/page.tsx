@@ -323,10 +323,10 @@ export default function Home() {
                 I'm a Software Architect who thrives on bridging the gap between complex technical challenges and real business impact.
                 My world spans from architecting <span className="text-purple">cloud infrastructure</span> (AWS, Azure and GCP) and leading engineering teams,
                 to hands-on coding of <span className="text-green">intuitive frontend experiences</span> and robust
-                 <span className="text-orange"> backend systems</span>. I believe the best solutions come from understanding the entire stack—and <span className="text-pink">the people</span> who build it.
+                 <span className="text-orange"> backend systems</span>. I believe the best solutions come from understanding the entire stack, and <span className="text-pink">the people</span> who build it.
               </p>
               <p className={`text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6 ${visibleSections.has('about') ? 'animate-fade-up animate-delay-200' : 'opacity-0'}`}>
-                I'm working with teams across the <span className="text-cyan">Globe</span>, showing them how <span className="text-orange">AI agents</span> and <span className="text-purple">LLMs</span> can transform the way we build software—making it
+                I'm working with teams across the <span className="text-cyan">Globe</span>, showing them how <span className="text-orange">AI agents</span> and <span className="text-purple">LLMs</span> can transform the way we build software, making it
                 not just <span className="text-green">faster</span>, but genuinely more <span className="text-yellow">enjoyable</span> and <span className="text-pink">efficient</span>, delivering <span className="text-foreground font-medium">real value to the business</span>. You'll often find me experimenting technologies like <span className="text-cyan">Langflow</span>, <span className="text-purple">LangGraph</span>, and <span className="text-orange">LangChain</span>,
                 taking those <span className="text-green">"what if we could..."</span> conversations and actually <span className="text-foreground font-medium">making them happen</span>.
               </p>
@@ -503,7 +503,7 @@ export default function Home() {
                         {experience.technologies.length > 8 && (
                           <button
                             onClick={() => toggleExperience(experience.id)}
-                            className="px-2 lg:px-3 py-1 bg-muted/10 text-muted-foreground rounded-full text-xs hover:bg-purple/10 hover:text-purple transition-colors cursor-pointer"
+                            className="px-2 lg:px-3 py-1 bg-muted/10 text-muted-foreground rounded-full text-xs hover:bg-purple/10 hover:text-purple transition-all duration-200 hover:scale-105 cursor-pointer"
                           >
                             {expandedExperiences.has(experience.id)
                               ? 'Show less'
@@ -578,8 +578,14 @@ export default function Home() {
                       href={articleHref}
                       target={isExternalLink ? "_blank" : undefined}
                       rel={isExternalLink ? "noopener noreferrer" : undefined}
-                      className={`group block p-4 sm:p-6 border border-border rounded-lg hover:border-orange transition-colors ${visibleSections.has('writing') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
+                      className={`group relative block p-4 sm:p-6 border border-border rounded-lg transition-all duration-300 cursor-pointer hover:border-orange/50 hover:scale-[1.01] ${visibleSections.has('writing') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
                     >
+                      {/* Click indicator badge - mobile only */}
+                      <div className="absolute top-2 right-2 sm:hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex items-center gap-1 px-2 py-1 bg-orange/10 text-orange rounded-full text-xs">
+                          <ArrowUpRight className="w-3 h-3" />
+                        </div>
+                      </div>
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2 flex-wrap">
@@ -636,17 +642,41 @@ export default function Home() {
               )}
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-                {featuredTalks.map((talk, index) => (
+                {featuredTalks.map((talk, index) => {
+                  const talkTypeColor = talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'
+                  const talkTypeBg = talk.type === 'Conference' ? 'bg-purple/10' : talk.type === 'Workshop' ? 'bg-green/10' : 'bg-cyan/10'
+                  const talkTypeText = talk.type === 'Conference' ? 'text-purple' : talk.type === 'Workshop' ? 'text-green' : 'text-cyan'
+
+                  // Determine primary action for card click
+                  const handleCardClick = () => {
+                    if (talk.recording) {
+                      window.open(talk.recording, '_blank', 'noopener,noreferrer')
+                    } else if (talk.slides) {
+                      window.open(talk.slides, '_blank', 'noopener,noreferrer')
+                    } else if (talk.image) {
+                      setSelectedTalk({ image: talk.image!, title: talk.title, event: talk.event })
+                    }
+                  }
+
+                  return (
                   <div
                     key={talk.id}
-                    className={`group border border-border rounded-lg overflow-hidden hover-lift h-full flex flex-col ${visibleSections.has('speaking') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
+                    onClick={handleCardClick}
+                    className={`group relative border border-border rounded-lg overflow-hidden transition-all duration-300 cursor-pointer hover:border-pink/50 hover:scale-[1.01] h-full flex flex-col ${visibleSections.has('speaking') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
                   >
+                    {/* Interactive indicator badge - mobile only */}
+                    <div className="absolute top-2 right-2 sm:hidden transition-opacity duration-300 z-10">
+                      <div className="flex items-center gap-1 px-2 py-1 bg-pink/10 text-pink rounded-full text-xs">
+                        <ArrowUpRight className="w-3 h-3" />
+                      </div>
+                    </div>
+
                     {/* Talk card content */}
                     <div className="p-4 lg:p-6 flex-1 flex flex-col">
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex items-center gap-2">
-                            <span className={`px-2 py-1 bg-${talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'}/10 text-${talk.type === 'Conference' ? 'purple' : talk.type === 'Workshop' ? 'green' : 'cyan'} rounded-full text-xs whitespace-nowrap`}>
+                            <span className={`px-2 py-1 ${talkTypeBg} ${talkTypeText} rounded-full text-xs whitespace-nowrap transition-all duration-300 group-hover:scale-110`}>
                               {talk.type}
                             </span>
                           </div>
@@ -656,8 +686,9 @@ export default function Home() {
                                 href={talk.slides}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-muted-foreground hover:text-pink transition-colors"
+                                className="p-2 rounded-lg bg-muted/10 text-muted-foreground hover:bg-pink/10 hover:text-pink transition-all duration-200 hover:scale-110 cursor-pointer"
                                 aria-label="View slides"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 <ArrowUpRight className="w-4 h-4" />
                               </Link>
@@ -667,16 +698,20 @@ export default function Home() {
                                 href={talk.recording}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-muted-foreground hover:text-pink transition-colors"
+                                className="p-2 rounded-lg bg-muted/10 text-muted-foreground hover:bg-pink/10 hover:text-pink transition-all duration-200 hover:scale-110 cursor-pointer"
                                 aria-label="Watch recording"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 <Play className="w-4 h-4" />
                               </Link>
                             )}
                             {talk.image && !talk.recording && (
                               <button
-                                onClick={() => setSelectedTalk({ image: talk.image!, title: talk.title, event: talk.event })}
-                                className="text-muted-foreground hover:text-pink transition-colors cursor-pointer"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setSelectedTalk({ image: talk.image!, title: talk.title, event: talk.event })
+                                }}
+                                className="p-2 rounded-lg bg-muted/10 text-muted-foreground hover:bg-pink/10 hover:text-pink transition-all duration-200 hover:scale-110 cursor-pointer"
                                 aria-label="View talk image"
                               >
                                 <ImageIcon className="w-4 h-4" />
@@ -736,7 +771,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
 
               {/* <div className="text-center mt-12">
