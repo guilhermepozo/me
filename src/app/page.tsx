@@ -23,6 +23,7 @@ export default function Home() {
   const [expandedExperiences, setExpandedExperiences] = useState<Set<string>>(new Set())
   const [expandedTalks, setExpandedTalks] = useState<Set<string>>(new Set())
   const [selectedTalk, setSelectedTalk] = useState<{ image: string; title: string; event: string } | null>(null)
+  const [selectedImage, setSelectedImage] = useState<{ image: string; title: string; description: string } | null>(null)
   const [activeSection, setActiveSection] = useState<string>('now')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['now']))
@@ -150,7 +151,7 @@ export default function Home() {
       {/* Mobile Header */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border animate-slide-down">
         <div className="flex items-center justify-between p-4">
-          <Link href="/" className="flex items-center animate-fade-in">
+          <Link href="/" className="flex items-center gap-3 animate-fade-in">
             <div className="text-lg font-bold">
               Guilherme <span className="gradient-text">Pozo</span>
             </div>
@@ -241,11 +242,34 @@ export default function Home() {
         {/* Desktop Sidebar */}
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 border-r border-border p-8 flex-col justify-between z-40 animate-slide-in-left">
           <div>
-            <Link href="/" className="block mb-16 animate-fade-in">
+            <Link href="/" className="block mb-16 animate-fade-in group">
               <div className="text-2xl font-bold transform transition-all duration-200 hover:scale-105">
                 Guilherme <span className="gradient-text">Pozo</span>
               </div>
-              <div className="text-sm text-muted-foreground mt-1 transition-colors duration-200 hover:text-foreground">Software Engineer</div>
+              <div className="relative flex items-start gap-3 mt-1">
+                <div className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground">Software Engineer</div>
+                <div className="relative group/dog">
+                  <div
+                    className="relative w-20 h-20 transition-all duration-300 group-hover/dog:scale-110 cursor-pointer mt-[-6px]"
+                    onClick={() => setSelectedImage({ image: '/shiva.png', title: 'Shiva', description: 'My Blue Heeler dog, one of the site inspirations 🐾' })}
+                  >
+                    <Image
+                      src="/shiva.png"
+                      alt="Shiva"
+                      width={60}
+                      height={60}
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-foreground text-background text-xs rounded-lg whitespace-nowrap opacity-0 group-hover/dog:opacity-100 transition-opacity duration-200 pointer-events-none z-50">
+                    <span className="flex items-center gap-1.5">
+                      🐾 Shiva, my dog, one of the site inspirations
+                    </span>
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 -mb-1 border-4 border-transparent border-b-foreground"></div>
+                  </div>
+                </div>
+              </div>
             </Link>
 
             <nav className="space-y-2">
@@ -675,7 +699,7 @@ export default function Home() {
             <div className="max-w-5xl">
               <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 transition-colors ${visibleSections.has('speaking') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'speaking' ? 'text-pink' : 'text-muted-foreground'}`}>Speaking & Workshops</h2>
 
-              {/* Image Modal */}
+              {/* Image Modal for Talks */}
               {selectedTalk && (
                 <ImageModal
                   images={[selectedTalk.image]}
@@ -683,6 +707,17 @@ export default function Home() {
                   description={selectedTalk.event}
                   isOpen={!!selectedTalk}
                   onClose={() => setSelectedTalk(null)}
+                />
+              )}
+
+              {/* Image Modal for Shiva */}
+              {selectedImage && (
+                <ImageModal
+                  images={[selectedImage.image]}
+                  title={selectedImage.title}
+                  description={selectedImage.description}
+                  isOpen={!!selectedImage}
+                  onClose={() => setSelectedImage(null)}
                 />
               )}
 
@@ -860,9 +895,42 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="px-4 sm:px-8 lg:px-16 py-8 lg:py-12 border-t border-border">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted-foreground">
-              <div>© 2025 Guilherme Pozo. All rights reserved.</div>
-              <div>Designed & built with care</div>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted-foreground">
+                <div>© 2025 Guilherme Pozo. All rights reserved.</div>
+                <div>Designed & built with care</div>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs text-muted-foreground">
+                <span>Design inspired by:</span>
+                <div className="flex items-center gap-3 flex-wrap">
+                  <Link
+                    href="https://draculatheme.com/pro"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-purple transition-all duration-200 inline-flex items-center gap-1 group"
+                  >
+                    Dracula Pro
+                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+                  <span className="text-border">•</span>
+                  <Link
+                    href="https://zenorocha.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-cyan transition-all duration-200 inline-flex items-center gap-1 group"
+                  >
+                    Zeno Rocha
+                    <ArrowUpRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </Link>
+                  <span className="text-border">•</span>
+                  <button
+                    onClick={() => setSelectedImage({ image: '/shiva.png', title: 'Shiva', description: 'My Blue Heeler dog, one of the site inspirations 🐾' })}
+                    className="hover:text-pink transition-colors inline-flex items-center gap-1 cursor-pointer group"
+                  >
+                    Shiva, my Blue Heeler dog 🐾
+                  </button>
+                </div>
+              </div>
             </div>
           </footer>
         </main>
