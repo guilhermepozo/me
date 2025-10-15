@@ -35,7 +35,7 @@ export const experiences: Experience[] = [
       'Built performant frontend applications with Next.js and React',
       'Implemented comprehensive CI/CD pipelines and observability strategies'
     ],
-    technologies: ['Next.js', 'React', 'TypeScript', 'Python', 'AI/LLMs', 'Terraform', 'Kubernetes', 'Azure DevOps', 'AWS', 'Vector Databases']
+    technologies: ['Next.js', 'React', 'TypeScript', 'Python', 'FastAPI', 'DDD', 'AI/LLMs', 'LangChain', 'LangGraph', 'Langflow', 'Terraform', 'Kubernetes', 'Helm', 'Azure DevOps', 'AWS', 'Serverless', 'PostgreSQL', 'DynamoDB', 'Vector Databases', 'Grafana', 'OpenTelemetry']
   },
   {
     id: 'ambev-sre',

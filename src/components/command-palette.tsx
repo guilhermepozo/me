@@ -91,7 +91,7 @@ export function CommandPalette() {
         onClick={() => setOpen(true)}
         className="fixed top-4 right-4 lg:top-6 lg:right-6 px-3 py-2.5 lg:px-4 lg:py-3 text-sm text-muted-foreground hover:text-foreground border border-border rounded-xl hover:border-foreground/20 transition-all duration-300 flex items-center gap-2 bg-background/95 backdrop-blur-lg z-50 shadow-lg hover:shadow-2xl group min-h-[44px] lg:min-h-auto"
       >
-        <span className="hidden md:inline text-xs lg:text-sm">Search</span>
+        <span className="hidden md:inline text-xs lg:text-sm">Quick Actions</span>
         <div className="flex items-center gap-1">
           <kbd className="px-1.5 py-1 lg:px-2 lg:py-1 text-xs bg-foreground/5 border border-foreground/10 rounded font-mono shadow-sm group-hover:bg-foreground/10 group-hover:border-foreground/20 transition-colors">
             {isMac ? '⌘' : 'Ctrl'}

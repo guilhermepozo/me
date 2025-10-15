@@ -26,10 +26,16 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<string>('now')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['now']))
+  const [isMac, setIsMac] = useState(false)
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(prev => !prev)
   }
+
+  // Detect macOS
+  useEffect(() => {
+    setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -304,13 +310,52 @@ export default function Home() {
                 where I architect cloud solutions, drive DevOps excellence, and pioneer AI/Agentic automation across the
                 software development lifecycle.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 animate-fade-up animate-delay-400">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4 animate-fade-up animate-delay-400">
                 <Link href="#projects" className="btn-primary text-center">
-                  View my work
+                  View my works
                 </Link>
-                <Link href="#contact" className="btn-secondary text-center">
-                  Get in touch
-                </Link>
+                <button
+                  onClick={() => {
+                    const event = new KeyboardEvent('keydown', {
+                      key: 'k',
+                      code: 'KeyK',
+                      ctrlKey: true,
+                      metaKey: true,
+                      bubbles: true
+                    });
+                    document.dispatchEvent(event);
+                  }}
+                  className="group relative px-6 py-3 rounded-lg border border-border hover:border-transparent transition-all duration-300 hover:-translate-y-1 overflow-hidden text-center"
+                >
+                  {/* Gradient border on hover */}
+                  <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-pink via-purple to-cyan p-[1px]">
+                    <div className="h-full w-full bg-background rounded-lg"></div>
+                  </div>
+
+                  {/* Gradient background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink/5 via-purple/5 to-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+
+                  <div className="relative inline-flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                    <span className="text-sm font-medium">Press</span>
+                    <kbd className="inline-flex items-center gap-1 px-2 py-1 bg-muted text-foreground border border-border rounded font-mono text-sm shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:border-purple/50">
+                      {isMac ? (
+                        <>
+                          <span>⌘</span>
+                          <span>K</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-xs">ctrl</span>
+                          <span>K</span>
+                        </>
+                      )}
+                    </kbd>
+                    <span className="text-sm font-medium">to start</span>
+                    <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </div>
+                </button>
               </div>
             </div>
           </section>
