@@ -7,27 +7,54 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Guilherme Pozo - Tech Lead & SRE",
-  description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence. Currently at Johnson & Johnson leading Digital & Full Stack LATAM.",
+  metadataBase: new URL("https://guilhermepozo.com"),
+  title: {
+    default: "Guilherme Pozo - Tech Lead, SRE & Cloud Architect",
+    template: "%s | Guilherme Pozo"
+  },
+  description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence. Currently at Johnson & Johnson leading Digital & Full Stack LATAM. Expert in AWS, Azure, Kubernetes, and AI-powered solutions.",
   keywords: [
+    "Guilherme Pozo",
     "Software Engineer",
     "Site Reliability Engineer",
+    "SRE",
     "Tech Lead",
+    "Cloud Architect",
     "Cloud Engineering",
-    "DevOps",
+    "DevOps Engineer",
     "AI Automation",
+    "LLM",
+    "AI Agents",
     "Infrastructure as Code",
+    "IaC",
     "Kubernetes",
     "AWS",
     "Azure",
+    "GCP",
     "Terraform",
+    "Docker",
+    "CI/CD",
+    "Platform Engineering",
     "Johnson & Johnson",
     "Brazil",
-    "São José dos Campos"
+    "São José dos Campos",
+    "Full Stack Developer",
+    "TypeScript",
+    "Python",
+    "React",
+    "Next.js",
+    "LangChain",
+    "Langflow",
+    "LangGraph"
   ],
-  authors: [{ name: "Guilherme Pozo" }],
+  authors: [{ name: "Guilherme Pozo", url: "https://guilhermepozo.com" }],
   creator: "Guilherme Pozo",
   publisher: "Guilherme Pozo",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   icons: {
     icon: [
       { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
@@ -42,24 +69,42 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://guilhermepozo.com",
-    title: "Guilherme Pozo - Tech Lead & SRE",
-    description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence.",
+    title: "Guilherme Pozo - Tech Lead, SRE & Cloud Architect",
+    description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence. Expert in AWS, Azure, Kubernetes, and AI-powered solutions.",
     siteName: "Guilherme Pozo",
+    images: [
+      {
+        url: "/shiva.png",
+        width: 759,
+        height: 845,
+        alt: "Guilherme Pozo - Tech Lead & SRE",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guilherme Pozo - Tech Lead, SRE & Cloud Architect",
+    description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence. Expert in AWS, Azure, Kubernetes, and AI-powered solutions.",
+    images: ["/shiva.png"],
+    creator: "@guilhermepozo",
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
+  alternates: {
+    canonical: "https://guilhermepozo.com",
   },
+  category: "technology",
 }
 
 export default function RootLayout({
@@ -67,8 +112,52 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Guilherme Pozo",
+    url: "https://guilhermepozo.com",
+    image: "https://guilhermepozo.com/shiva.png",
+    jobTitle: "Tech Lead & Site Reliability Engineer",
+    worksFor: {
+      "@type": "Organization",
+      name: "Johnson & Johnson",
+    },
+    description: "Technical Leader specializing in cloud engineering, AI automation, and DevOps excellence. Expert in AWS, Azure, Kubernetes, and AI-powered solutions.",
+    sameAs: [
+      "https://github.com/guilhermepozo",
+      "https://www.linkedin.com/in/guilhermepozo/",
+    ],
+    knowsAbout: [
+      "Cloud Engineering",
+      "Site Reliability Engineering",
+      "DevOps",
+      "AI Automation",
+      "Kubernetes",
+      "AWS",
+      "Azure",
+      "GCP",
+      "Infrastructure as Code",
+      "Platform Engineering",
+      "Software Architecture",
+      "Full Stack Development",
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "São José dos Campos",
+      addressRegion: "SP",
+      addressCountry: "BR",
+    },
+  }
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center bg-background">

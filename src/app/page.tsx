@@ -902,7 +902,7 @@ export default function Home() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-muted-foreground">
                 <div>© 2025 Guilherme Pozo. All rights reserved.</div>
-                <div>Designed & built with care</div>
+                <div>Designed & built with care in Brazil 🇧🇷</div>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs text-muted-foreground">
                 <span>Design inspired by:</span>
