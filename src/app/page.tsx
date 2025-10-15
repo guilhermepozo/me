@@ -221,15 +221,17 @@ export default function Home() {
             >
               <Link
                 href="https://github.com/guilhermepozo"
-                className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
-                aria-label="GitHub"
+                className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5 relative group"
+                aria-label="GitHub Profile"
+                title="Visit my GitHub profile"
               >
                 <Github className="w-5 h-5" />
               </Link>
               <Link
                 href="https://www.linkedin.com/in/guilhermepozo/"
-                className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
-                aria-label="LinkedIn"
+                className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5 relative group"
+                aria-label="LinkedIn Profile"
+                title="Connect with me on LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </Link>
@@ -305,15 +307,17 @@ export default function Home() {
           <div className="flex gap-4 animate-fade-in animate-delay-400">
             <Link
               href="https://github.com/guilhermepozo"
-              className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3"
-              aria-label="GitHub"
+              className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3 relative group"
+              aria-label="GitHub Profile"
+              title="Visit my GitHub profile"
             >
               <Github className="w-5 h-5" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/guilhermepozo/"
-              className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3"
-              aria-label="LinkedIn"
+              className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3 relative group"
+              aria-label="LinkedIn Profile"
+              title="Connect with me on LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </Link>
@@ -349,7 +353,7 @@ export default function Home() {
                     });
                     document.dispatchEvent(event);
                   }}
-                  className="group relative px-6 py-3 rounded-lg border border-border hover:border-transparent transition-all duration-300 hover:-translate-y-1 overflow-hidden text-center"
+                  className="group relative px-6 py-3 rounded-lg border border-border hover:border-transparent transition-all duration-300 hover:-translate-y-1 overflow-hidden text-center cursor-pointer"
                 >
                   {/* Gradient border on hover */}
                   <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-pink via-purple to-cyan p-[1px]">
