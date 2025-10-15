@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight, Github, Linkedin, Mail, Clock, Calendar, MapPin, Play, Image as ImageIcon } from "lucide-react"
@@ -25,6 +25,7 @@ export default function Home() {
   const [selectedTalk, setSelectedTalk] = useState<{ image: string; title: string; event: string } | null>(null)
   const [activeSection, setActiveSection] = useState<string>('now')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set(['now']))
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(prev => !prev)
@@ -48,6 +49,32 @@ export default function Home() {
     handleScroll() // Check initial position
 
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id
+            setVisibleSections((prev) => new Set(prev).add(sectionId))
+          }
+        })
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -10% 0px'
+      }
+    )
+
+    const sections = ['now', 'about', 'experience', 'projects', 'writing', 'speaking']
+    sections.forEach((sectionId) => {
+      const element = document.getElementById(sectionId)
+      if (element) observer.observe(element)
+    })
+
+    return () => observer.disconnect()
   }, [])
 
   // Separate useEffect for mobile menu scroll closing
@@ -115,35 +142,35 @@ export default function Home() {
       <CommandPalette />
 
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur border-b border-border animate-slide-down">
         <div className="flex items-center justify-between p-4">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center animate-fade-in">
             <div className="text-lg font-bold">
               Guilherme <span className="gradient-text">Pozo</span>
             </div>
           </Link>
-          
-          <div className="flex items-center gap-2">            
+
+          <div className="flex items-center gap-2 animate-fade-in animate-delay-100">
             <button
               onClick={toggleMobileMenu}
-              className="p-2 text-muted-foreground hover:text-foreground transition-colors border border-transparent hover:border-border rounded"
+              className="p-2 text-muted-foreground hover:text-foreground transition-all duration-200 border border-transparent hover:border-border hover:bg-muted/20 rounded transform hover:scale-105 active:scale-95"
               aria-label="Toggle menu"
               type="button"
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center relative">
-                <span className={`block w-6 h-0.5 bg-current transition-all duration-300 absolute ${
-                  mobileMenuOpen 
-                    ? 'rotate-45' 
+                <span className={`block w-6 h-0.5 bg-current transition-all duration-300 ease-out absolute ${
+                  mobileMenuOpen
+                    ? 'rotate-45'
                     : '-translate-y-1.5'
                 }`} />
-                <span className={`block w-6 h-0.5 bg-current transition-all duration-300 ${
-                  mobileMenuOpen 
-                    ? 'opacity-0 scale-0' 
+                <span className={`block w-6 h-0.5 bg-current transition-all duration-200 ease-out ${
+                  mobileMenuOpen
+                    ? 'opacity-0 scale-0'
                     : 'opacity-100 scale-100'
                 }`} />
-                <span className={`block w-6 h-0.5 bg-current transition-all duration-300 absolute ${
-                  mobileMenuOpen 
-                    ? '-rotate-45' 
+                <span className={`block w-6 h-0.5 bg-current transition-all duration-300 ease-out absolute ${
+                  mobileMenuOpen
+                    ? '-rotate-45'
                     : 'translate-y-1.5'
                 }`} />
               </div>
@@ -152,87 +179,49 @@ export default function Home() {
         </div>
 
         {/* Mobile Navigation Menu */}
-        <div className={`overflow-hidden transition-all duration-300 ease-in-out border-t border-border bg-background/95 backdrop-blur transform ${mobileMenuOpen ? 'max-h-80 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'}`}>
-          <div className={`p-4 space-y-4 transition-all duration-300 ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
-            <Link
-              href="#now"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'now' 
-                  ? 'text-yellow font-medium' 
-                  : 'text-muted-foreground hover:text-yellow'
-              }`}
-            >
-              Now
-            </Link>
-            <Link
-              href="#about"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'about' 
-                  ? 'text-cyan font-medium' 
-                  : 'text-muted-foreground hover:text-cyan'
-              }`}
-            >
-              About
-            </Link>
-            <Link
-              href="#experience"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'experience' 
-                  ? 'text-purple font-medium' 
-                  : 'text-muted-foreground hover:text-purple'
-              }`}
-            >
-              Experience
-            </Link>
-            <Link
-              href="#projects"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'projects' 
-                  ? 'text-green font-medium' 
-                  : 'text-muted-foreground hover:text-green'
-              }`}
-            >
-              Projects
-            </Link>
-            <Link
-              href="#writing"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'writing'
-                  ? 'text-orange font-medium'
-                  : 'text-muted-foreground hover:text-orange'
-              }`}
-            >
-              Writing
-            </Link>
-            <Link
-              href="#speaking"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'speaking'
-                  ? 'text-pink font-medium'
-                  : 'text-muted-foreground hover:text-pink'
-              }`}
-            >
-              Speaking
-            </Link>
+        <div className={`overflow-hidden transition-all duration-500 ease-in-out border-t border-border bg-background/95 backdrop-blur ${mobileMenuOpen ? 'max-h-96' : 'max-h-0 border-t-transparent'}`}>
+          <div className={`p-4 space-y-1 transition-all duration-300 ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
+            {[
+              { href: '#now', label: 'Now', activeClass: 'text-yellow bg-yellow/10', hoverClass: 'hover:text-yellow hover:bg-yellow/5', barClass: 'bg-yellow', delay: '50ms' },
+              { href: '#about', label: 'About', activeClass: 'text-cyan bg-cyan/10', hoverClass: 'hover:text-cyan hover:bg-cyan/5', barClass: 'bg-cyan', delay: '100ms' },
+              { href: '#experience', label: 'Experience', activeClass: 'text-purple bg-purple/10', hoverClass: 'hover:text-purple hover:bg-purple/5', barClass: 'bg-purple', delay: '150ms' },
+              { href: '#projects', label: 'Projects', activeClass: 'text-green bg-green/10', hoverClass: 'hover:text-green hover:bg-green/5', barClass: 'bg-green', delay: '200ms' },
+              { href: '#writing', label: 'Writing', activeClass: 'text-orange bg-orange/10', hoverClass: 'hover:text-orange hover:bg-orange/5', barClass: 'bg-orange', delay: '250ms' },
+              { href: '#speaking', label: 'Speaking', activeClass: 'text-pink bg-pink/10', hoverClass: 'hover:text-pink hover:bg-pink/5', barClass: 'bg-pink', delay: '300ms' },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{ transitionDelay: mobileMenuOpen ? item.delay : '0ms' }}
+                className={`block transition-all duration-200 text-sm uppercase tracking-wider py-3 px-4 rounded-lg relative overflow-hidden group ${
+                  activeSection === item.href.slice(1)
+                    ? `${item.activeClass} font-medium`
+                    : `text-muted-foreground ${item.hoverClass}`
+                } ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
+              >
+                <span className={`absolute left-0 top-0 h-full w-1 ${item.barClass} transform transition-transform duration-200 ${
+                  activeSection === item.href.slice(1) ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100'
+                }`}></span>
+                {item.label}
+              </Link>
+            ))}
 
             {/* Mobile Social Links */}
-            <div className="flex gap-4 pt-3 border-t border-border">
+            <div
+              className={`flex gap-4 pt-4 mt-3 border-t border-border transition-all duration-300 ${mobileMenuOpen ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'}`}
+              style={{ transitionDelay: mobileMenuOpen ? '350ms' : '0ms' }}
+            >
               <Link
                 href="https://github.com/guilhermepozo"
-                className="text-muted-foreground hover:text-purple transition-colors"
+                className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
               </Link>
               <Link
                 href="https://www.linkedin.com/in/guilhermepozo/"
-                className="text-muted-foreground hover:text-cyan transition-colors"
+                className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-0.5"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
@@ -244,95 +233,60 @@ export default function Home() {
 
       <div className="flex min-h-screen">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 border-r border-border p-8 flex-col justify-between z-40">
+        <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 border-r border-border p-8 flex-col justify-between z-40 animate-slide-in-left">
           <div>
-            <Link href="/" className="block mb-16">
-              <div className="text-2xl font-bold">
+            <Link href="/" className="block mb-16 animate-fade-in">
+              <div className="text-2xl font-bold transform transition-all duration-200 hover:scale-105">
                 Guilherme <span className="gradient-text">Pozo</span>
               </div>
-              <div className="text-sm text-muted-foreground mt-1">Software Engineer</div>
+              <div className="text-sm text-muted-foreground mt-1 transition-colors duration-200 hover:text-foreground">Software Engineer</div>
             </Link>
 
-            <nav className="space-y-6">
-              <Link
-                href="#now"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'now' 
-                    ? 'text-yellow font-medium' 
-                    : 'text-muted-foreground hover:text-yellow'
-                }`}
-              >
-                Now
-              </Link>
-              <Link
-                href="#about"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'about' 
-                    ? 'text-cyan font-medium' 
-                    : 'text-muted-foreground hover:text-cyan'
-                }`}
-              >
-                About
-              </Link>
-              <Link
-                href="#experience"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'experience' 
-                    ? 'text-purple font-medium' 
-                    : 'text-muted-foreground hover:text-purple'
-                }`}
-              >
-                Experience
-              </Link>
-              <Link
-                href="#projects"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'projects' 
-                    ? 'text-green font-medium' 
-                    : 'text-muted-foreground hover:text-green'
-                }`}
-              >
-                Projects
-              </Link>
-              <Link
-                href="#writing"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'writing'
-                    ? 'text-orange font-medium'
-                    : 'text-muted-foreground hover:text-orange'
-                }`}
-              >
-                Writing
-              </Link>
-              <Link
-                href="#speaking"
-                className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'speaking'
-                    ? 'text-pink font-medium'
-                    : 'text-muted-foreground hover:text-pink'
-                }`}
-              >
-                Speaking
-              </Link>
+            <nav className="space-y-2">
+              {[
+                { href: '#now', label: 'Now', activeClass: 'text-yellow bg-yellow/10', hoverClass: 'hover:text-yellow hover:bg-yellow/5', barClass: 'bg-yellow', delay: '100ms' },
+                { href: '#about', label: 'About', activeClass: 'text-cyan bg-cyan/10', hoverClass: 'hover:text-cyan hover:bg-cyan/5', barClass: 'bg-cyan', delay: '150ms' },
+                { href: '#experience', label: 'Experience', activeClass: 'text-purple bg-purple/10', hoverClass: 'hover:text-purple hover:bg-purple/5', barClass: 'bg-purple', delay: '200ms' },
+                { href: '#projects', label: 'Projects', activeClass: 'text-green bg-green/10', hoverClass: 'hover:text-green hover:bg-green/5', barClass: 'bg-green', delay: '250ms' },
+                { href: '#writing', label: 'Writing', activeClass: 'text-orange bg-orange/10', hoverClass: 'hover:text-orange hover:bg-orange/5', barClass: 'bg-orange', delay: '300ms' },
+                { href: '#speaking', label: 'Speaking', activeClass: 'text-pink bg-pink/10', hoverClass: 'hover:text-pink hover:bg-pink/5', barClass: 'bg-pink', delay: '350ms' },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{ animationDelay: item.delay }}
+                  className={`block transition-all duration-200 text-sm uppercase tracking-wider py-2 px-3 rounded-lg relative overflow-hidden group animate-slide-in-left ${
+                    activeSection === item.href.slice(1)
+                      ? `${item.activeClass} font-medium`
+                      : `text-muted-foreground ${item.hoverClass}`
+                  }`}
+                >
+                  <span className={`absolute left-0 top-0 h-full w-1 ${item.barClass} transform transition-all duration-300 ${
+                    activeSection === item.href.slice(1) ? 'scale-y-100' : 'scale-y-0 group-hover:scale-y-100'
+                  }`}></span>
+                  <span className="relative z-10 block transform transition-transform duration-200 group-hover:translate-x-1">
+                    {item.label}
+                  </span>
+                </Link>
+              ))}
             </nav>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 animate-fade-in animate-delay-400">
             <Link
               href="https://github.com/guilhermepozo"
-              className="text-muted-foreground hover:text-purple transition-colors"
+              className="text-muted-foreground hover:text-purple transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
             </Link>
             <Link
               href="https://www.linkedin.com/in/guilhermepozo/"
-              className="text-muted-foreground hover:text-cyan transition-colors"
+              className="text-muted-foreground hover:text-cyan transition-all duration-200 transform hover:scale-110 hover:-translate-y-1 hover:rotate-3"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </Link>
-
           </div>
         </aside>
 
@@ -364,19 +318,19 @@ export default function Home() {
           {/* About Section */}
           <section id="about" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-3xl">
-              <h2 className={`text-sm uppercase tracking-wider mb-6 lg:mb-8 transition-colors ${activeSection === 'about' ? 'text-cyan' : 'text-muted-foreground'}`}>About</h2>
-              <p className="text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6">
-                I'm a Software Architect who thrives on bridging the gap between complex technical challenges and real business impact. 
-                My world spans from architecting <span className="text-purple">cloud infrastructure</span> (AWS, Azure and GCP) and leading engineering teams, 
-                to hands-on coding of <span className="text-green">intuitive frontend experiences</span> and robust 
+              <h2 className={`text-sm uppercase tracking-wider mb-6 lg:mb-8 transition-colors ${visibleSections.has('about') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'about' ? 'text-cyan' : 'text-muted-foreground'}`}>About</h2>
+              <p className={`text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6 ${visibleSections.has('about') ? 'animate-fade-up animate-delay-100' : 'opacity-0'}`}>
+                I'm a Software Architect who thrives on bridging the gap between complex technical challenges and real business impact.
+                My world spans from architecting <span className="text-purple">cloud infrastructure</span> (AWS, Azure and GCP) and leading engineering teams,
+                to hands-on coding of <span className="text-green">intuitive frontend experiences</span> and robust
                  <span className="text-orange"> backend systems</span>. I believe the best solutions come from understanding the entire stack—and <span className="text-pink">the people</span> who build it.
               </p>
-              <p className="text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6">
+              <p className={`text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6 ${visibleSections.has('about') ? 'animate-fade-up animate-delay-200' : 'opacity-0'}`}>
                 I'm working with teams across the <span className="text-cyan">Globe</span>, showing them how <span className="text-orange">AI agents</span> and <span className="text-purple">LLMs</span> can transform the way we build software—making it
                 not just <span className="text-green">faster</span>, but genuinely more <span className="text-yellow">enjoyable</span> and <span className="text-pink">efficient</span>, delivering <span className="text-foreground font-medium">real value to the business</span>. You'll often find me experimenting technologies like <span className="text-cyan">Langflow</span>, <span className="text-purple">LangGraph</span>, and <span className="text-orange">LangChain</span>,
                 taking those <span className="text-green">"what if we could..."</span> conversations and actually <span className="text-foreground font-medium">making them happen</span>.
               </p>
-              <p className="text-base lg:text-lg text-comment leading-relaxed">
+              <p className={`text-base lg:text-lg text-comment leading-relaxed ${visibleSections.has('about') ? 'animate-fade-up animate-delay-300' : 'opacity-0'}`}>
                 I call <span className="text-foreground">São José dos Campos, Brazil</span> home, and I've been
                 fortunate to work with amazing teams at places like <span className="text-foreground">Johnson & Johnson</span>, <span className="text-foreground">Embraer</span>, and <span className="text-foreground">Ambev</span>, plus some
                 really cool startups like <span className="text-foreground">Quero Educação</span>. What drives me is making developers' lives easier and building systems that can actually scale.
@@ -443,8 +397,8 @@ export default function Home() {
           <section id="experience" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-4xl">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 lg:mb-12">
-                <h2 className={`text-sm uppercase tracking-wider animate-fade-up mb-2 sm:mb-0 transition-colors ${activeSection === 'experience' ? 'text-purple' : 'text-muted-foreground'}`}>Experience</h2>
-                <div className="text-sm text-muted-foreground animate-fade-up animate-delay-100">
+                <h2 className={`text-sm uppercase tracking-wider mb-2 sm:mb-0 transition-colors ${visibleSections.has('experience') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'experience' ? 'text-purple' : 'text-muted-foreground'}`}>Experience</h2>
+                <div className={`text-sm text-muted-foreground ${visibleSections.has('experience') ? 'animate-fade-up animate-delay-100' : 'opacity-0'}`}>
                   {yearsOfExperience}+ years in tech
                 </div>
               </div>
@@ -453,7 +407,7 @@ export default function Home() {
                 {experiences.map((experience, index) => (
                   <div
                     key={experience.id}
-                    className={`group relative animate-fade-up animate-delay-${(index + 1) * 100}`}
+                    className={`group relative ${visibleSections.has('experience') ? `animate-fade-up animate-delay-${Math.min((index + 2) * 100, 500)}` : 'opacity-0'}`}
                   >
                     {/* Timeline dot - hidden on mobile */}
                     <div className="hidden sm:block absolute left-0 top-6 w-3 h-3 bg-border rounded-full group-hover:bg-purple transition-colors"></div>
@@ -568,13 +522,13 @@ export default function Home() {
           {/* Projects Section */}
           <section id="projects" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-6xl">
-              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'projects' ? 'text-green' : 'text-muted-foreground'}`}>Projects</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 transition-colors ${visibleSections.has('projects') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'projects' ? 'text-green' : 'text-muted-foreground'}`}>Projects</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {featuredProjects.map((project, index) => (
                   <div
                     key={project.id}
-                    className={`animate-fade-up animate-delay-${(index + 1) * 100}`}
+                    className={visibleSections.has('projects') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}
                   >
                     <ProjectCard project={project} featured />
                   </div>
@@ -592,7 +546,7 @@ export default function Home() {
           {/* Writing Section */}
           <section id="writing" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-4xl">
-              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'writing' ? 'text-orange' : 'text-muted-foreground'}`}>Writing</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 transition-colors ${visibleSections.has('writing') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'writing' ? 'text-orange' : 'text-muted-foreground'}`}>Writing</h2>
 
               <div className="space-y-8">
                 {featuredArticles.map((article, index) => {
@@ -624,7 +578,7 @@ export default function Home() {
                       href={articleHref}
                       target={isExternalLink ? "_blank" : undefined}
                       rel={isExternalLink ? "noopener noreferrer" : undefined}
-                      className={`group block p-4 sm:p-6 border border-border rounded-lg hover:border-orange transition-colors animate-fade-up animate-delay-${(index + 1) * 100}`}
+                      className={`group block p-4 sm:p-6 border border-border rounded-lg hover:border-orange transition-colors ${visibleSections.has('writing') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
                         <div className="flex-1">
@@ -668,7 +622,7 @@ export default function Home() {
           {/* Speaking Section */}
           <section id="speaking" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-5xl">
-              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'speaking' ? 'text-pink' : 'text-muted-foreground'}`}>Speaking & Workshops</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 transition-colors ${visibleSections.has('speaking') ? 'animate-fade-up' : 'opacity-0'} ${activeSection === 'speaking' ? 'text-pink' : 'text-muted-foreground'}`}>Speaking & Workshops</h2>
 
               {/* Image Modal */}
               {selectedTalk && (
@@ -685,7 +639,7 @@ export default function Home() {
                 {featuredTalks.map((talk, index) => (
                   <div
                     key={talk.id}
-                    className={`group border border-border rounded-lg overflow-hidden hover-lift animate-fade-up animate-delay-${(index + 1) * 100} h-full flex flex-col`}
+                    className={`group border border-border rounded-lg overflow-hidden hover-lift h-full flex flex-col ${visibleSections.has('speaking') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
                   >
                     {/* Talk card content */}
                     <div className="p-4 lg:p-6 flex-1 flex flex-col">
