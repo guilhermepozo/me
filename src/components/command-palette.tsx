@@ -10,7 +10,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { Link2, Mail, Code2, Home, User, Briefcase, FolderGit2, FileText, Mic } from "lucide-react"
+import { Link2, Code2, Home, User, Briefcase, FolderGit2, FileText, Mic } from "lucide-react"
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false)
@@ -34,9 +34,6 @@ export function CommandPalette() {
         if (e.key === "l") {
           e.preventDefault()
           copyLink()
-        } else if (e.key === "e") {
-          e.preventDefault()
-          sendEmail()
         } else if (e.key === "s") {
           e.preventDefault()
           viewSource()
@@ -72,11 +69,6 @@ export function CommandPalette() {
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href)
-    setOpen(false)
-  }
-
-  const sendEmail = () => {
-    window.location.href = "mailto:hello@guilhermepozo.com"
     setOpen(false)
   }
 
@@ -134,19 +126,6 @@ export function CommandPalette() {
                 </div>
               </div>
               <kbd className="px-2 py-1 text-xs bg-muted/50 border border-border rounded font-mono text-muted-foreground">L</kbd>
-            </CommandItem>
-
-            <CommandItem onSelect={sendEmail} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/80 data-[selected=true]:bg-muted/80 transition-colors cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-muted/50 flex items-center justify-center">
-                  <Mail className="w-4 h-4 text-muted-foreground" />
-                </div>
-                <div>
-                  <span className="font-medium text-foreground">Send Email</span>
-                  <p className="text-xs text-muted-foreground">hello@guilhermepozo.com</p>
-                </div>
-              </div>
-              <kbd className="px-2 py-1 text-xs bg-muted/50 border border-border rounded font-mono text-muted-foreground">E</kbd>
             </CommandItem>
 
             <CommandItem onSelect={viewSource} className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-muted/80 data-[selected=true]:bg-muted/80 transition-colors cursor-pointer">

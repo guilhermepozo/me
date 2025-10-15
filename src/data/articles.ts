@@ -13,6 +13,22 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: 'gaming-blog-career-foundation',
+    slug: 'gaming-blog-career-foundation',
+    title: 'How a 15-Year-Old\'s Gaming Blog Became the Foundation of My Career',
+    description: 'The story of Viciados GC, a gaming blog I created as a teenager that sparked my passion for technology, digital content creation, and community building, ultimately shaping my career in software engineering.',
+    content: `# How a 15-Year-Old's Gaming Blog Became the Foundation of My Career
+
+What began with a Pentium 4 and sleepless nights exploring forums, blogs, and online games became the foundation of everything I do today. This is the story of how a teenage passion project taught me lessons that would shape my entire career in technology.
+
+Read the full article on LinkedIn: https://www.linkedin.com/pulse/how-15-year-olds-gaming-blog-became-foundation-my-career-pozo-mgztf`,
+    publishedAt: '2025-10-15',
+    readTime: 5,
+    tags: ['Career', 'Personal', 'Gaming', 'Community', 'Content Creation'],
+    category: 'Career',
+    featured: true
+  },
+  {
     id: 'building-resilient-cloud-infrastructure',
     slug: 'building-resilient-cloud-infrastructure',
     title: 'Building Resilient Cloud Infrastructure: Lessons from Enterprise Scale',
@@ -105,7 +121,7 @@ Building resilient infrastructure is a journey, not a destination. Start with so
     readTime: 8,
     tags: ['Cloud', 'Infrastructure', 'DevOps', 'Terraform', 'AWS'],
     category: 'Technical',
-    featured: true
+    featured: false
   },
   {
     id: 'ai-in-software-development',
@@ -227,7 +243,7 @@ The future of software development isn't about AI replacing developers – it's 
     readTime: 10,
     tags: ['AI', 'Machine Learning', 'Development', 'Automation', 'Langflow'],
     category: 'AI/ML',
-    featured: true
+    featured: false
   },
   {
     id: 'scaling-engineering-teams',
@@ -393,7 +409,7 @@ Scaling engineering teams is as much about organizational design as it is about 
     readTime: 12,
     tags: ['Leadership', 'Team Building', 'Organization', 'Management', 'Culture'],
     category: 'Leadership',
-    featured: true
+    featured: false
   },
   {
     id: 'kubernetes-production-lessons',

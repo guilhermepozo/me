@@ -32,9 +32,9 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['now', 'about', 'experience', 'projects', 'speaking']
+      const sections = ['now', 'about', 'experience', 'projects', 'writing', 'speaking']
       const scrollPosition = window.scrollY + 100 // Offset for better detection
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i])
         if (section && section.offsetTop <= scrollPosition) {
@@ -46,7 +46,7 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll)
     handleScroll() // Check initial position
-    
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -199,17 +199,28 @@ export default function Home() {
               Projects
             </Link>
             <Link
+              href="#writing"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
+                activeSection === 'writing'
+                  ? 'text-orange font-medium'
+                  : 'text-muted-foreground hover:text-orange'
+              }`}
+            >
+              Writing
+            </Link>
+            <Link
               href="#speaking"
               onClick={() => setMobileMenuOpen(false)}
               className={`block transition-colors text-sm uppercase tracking-wider py-2 ${
-                activeSection === 'speaking' 
-                  ? 'text-pink font-medium' 
+                activeSection === 'speaking'
+                  ? 'text-pink font-medium'
                   : 'text-muted-foreground hover:text-pink'
               }`}
             >
               Speaking
             </Link>
-            
+
             {/* Mobile Social Links */}
             <div className="flex gap-4 pt-3 border-t border-border">
               <Link
@@ -225,13 +236,6 @@ export default function Home() {
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
-              </Link>
-              <Link
-                href="mailto:hello@guilhermepozo.com"
-                className="text-muted-foreground hover:text-orange transition-colors"
-                aria-label="Email"
-              >
-                <Mail className="w-5 h-5" />
               </Link>
             </div>
           </div>
@@ -291,15 +295,25 @@ export default function Home() {
                 Projects
               </Link>
               <Link
+                href="#writing"
+                className={`block transition-colors text-sm uppercase tracking-wider ${
+                  activeSection === 'writing'
+                    ? 'text-orange font-medium'
+                    : 'text-muted-foreground hover:text-orange'
+                }`}
+              >
+                Writing
+              </Link>
+              <Link
                 href="#speaking"
                 className={`block transition-colors text-sm uppercase tracking-wider ${
-                  activeSection === 'speaking' 
-                    ? 'text-pink font-medium' 
+                  activeSection === 'speaking'
+                    ? 'text-pink font-medium'
                     : 'text-muted-foreground hover:text-pink'
                 }`}
               >
                 Speaking
-              </Link> 
+              </Link>
             </nav>
           </div>
 
@@ -318,13 +332,7 @@ export default function Home() {
             >
               <Linkedin className="w-5 h-5" />
             </Link>
-            <Link
-              href="mailto:hello@guilhermepozo.com"
-              className="text-muted-foreground hover:text-orange transition-colors"
-              aria-label="Email"
-            >
-              <Mail className="w-5 h-5" />
-            </Link>
+
           </div>
         </aside>
 
@@ -356,7 +364,7 @@ export default function Home() {
           {/* About Section */}
           <section id="about" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-3xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-6 lg:mb-8">About</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-6 lg:mb-8 transition-colors ${activeSection === 'about' ? 'text-cyan' : 'text-muted-foreground'}`}>About</h2>
               <p className="text-base lg:text-lg text-comment leading-relaxed mb-4 lg:mb-6">
                 I'm a Software Architect who thrives on bridging the gap between complex technical challenges and real business impact. 
                 My world spans from architecting <span className="text-purple">cloud infrastructure</span> (AWS, Azure and GCP) and leading engineering teams, 
@@ -435,7 +443,7 @@ export default function Home() {
           <section id="experience" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-4xl">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 lg:mb-12">
-                <h2 className="text-sm uppercase tracking-wider text-muted-foreground animate-fade-up mb-2 sm:mb-0">Experience</h2>
+                <h2 className={`text-sm uppercase tracking-wider animate-fade-up mb-2 sm:mb-0 transition-colors ${activeSection === 'experience' ? 'text-purple' : 'text-muted-foreground'}`}>Experience</h2>
                 <div className="text-sm text-muted-foreground animate-fade-up animate-delay-100">
                   {yearsOfExperience}+ years in tech
                 </div>
@@ -560,7 +568,7 @@ export default function Home() {
           {/* Projects Section */}
           <section id="projects" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-6xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-8 lg:mb-12 animate-fade-up">Projects</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'projects' ? 'text-green' : 'text-muted-foreground'}`}>Projects</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {featuredProjects.map((project, index) => (
@@ -582,65 +590,85 @@ export default function Home() {
           </section>
 
           {/* Writing Section */}
-          {/* <section id="writing" className="px-16 py-20 border-t border-border">
+          <section id="writing" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-4xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-12 animate-fade-up">Recent Writing</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'writing' ? 'text-orange' : 'text-muted-foreground'}`}>Writing</h2>
 
               <div className="space-y-8">
-                {featuredArticles.map((article, index) => (
-                  <Link
-                    key={article.id}
-                    href={`/blog/${article.slug}`}
-                    className={`group block hover-lift animate-fade-up animate-delay-${(index + 1) * 100}`}
-                  >
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <span className={`px-2 py-1 bg-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'}/10 text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} rounded-full text-xs`}>
-                            {article.category}
-                          </span>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Clock className="w-3 h-3" />
-                            {article.readTime} min read
-                          </div>
-                        </div>
-                        <h3 className={`text-lg font-medium text-foreground group-hover:text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} transition-colors mb-2`}>
-                          {article.title}
-                        </h3>
-                        <p className="text-comment text-sm leading-relaxed">
-                          {article.description}
-                        </p>
-                      </div>
-                      <div className="flex flex-col items-end ml-6">
-                        <span className="text-sm text-muted-foreground mb-2">
-                          {new Date(article.publishedAt).getFullYear()}
-                        </span>
-                        <ArrowUpRight className={`w-5 h-5 text-muted-foreground group-hover:text-${article.category === 'Technical' ? 'cyan' : article.category === 'AI/ML' ? 'orange' : 'purple'} transition-colors`} />
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {article.tags.slice(0, 4).map((tag, tagIndex) => (
-                        <span key={tagIndex} className="text-xs text-muted-foreground">
-                          {tag}{tagIndex < Math.min(article.tags.length, 4) - 1 && <span className="mx-1">•</span>}
-                        </span>
-                      ))}
-                    </div>
-                  </Link>
-                ))}
-              </div>
+                {featuredArticles.map((article, index) => {
+                  const isExternalLink = article.id === 'gaming-blog-career-foundation'
+                  const articleHref = isExternalLink
+                    ? 'https://www.linkedin.com/pulse/how-15-year-olds-gaming-blog-became-foundation-my-career-pozo-mgztf'
+                    : `/blog/${article.slug}`
 
-              <div className="text-center mt-12">
-                <Link href="/blog" className="btn-secondary">
-                  View All Articles
-                </Link>
+                  const getCategoryColors = (category: string) => {
+                    switch (category) {
+                      case 'Technical':
+                        return { bg: 'bg-cyan/10', text: 'text-cyan', hover: 'group-hover:text-cyan' }
+                      case 'AI/ML':
+                        return { bg: 'bg-orange/10', text: 'text-orange', hover: 'group-hover:text-orange' }
+                      case 'Career':
+                        return { bg: 'bg-yellow/10', text: 'text-yellow', hover: 'group-hover:text-yellow' }
+                      case 'Leadership':
+                        return { bg: 'bg-purple/10', text: 'text-purple', hover: 'group-hover:text-purple' }
+                      default:
+                        return { bg: 'bg-purple/10', text: 'text-purple', hover: 'group-hover:text-purple' }
+                    }
+                  }
+
+                  const colors = getCategoryColors(article.category)
+
+                  return (
+                    <Link
+                      key={article.id}
+                      href={articleHref}
+                      target={isExternalLink ? "_blank" : undefined}
+                      rel={isExternalLink ? "noopener noreferrer" : undefined}
+                      className={`group block p-4 sm:p-6 border border-border rounded-lg hover:border-orange transition-colors animate-fade-up animate-delay-${(index + 1) * 100}`}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2 flex-wrap">
+                            <span className={`px-2 py-1 ${colors.bg} ${colors.text} rounded-full text-xs whitespace-nowrap`}>
+                              {article.category}
+                            </span>
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <Clock className="w-3 h-3" />
+                              {article.readTime} min read
+                            </div>
+                          </div>
+                          <h3 className={`text-lg font-medium text-foreground ${colors.hover} transition-colors mb-2`}>
+                            {article.title}
+                          </h3>
+                          <p className="text-comment text-sm leading-relaxed">
+                            {article.description}
+                          </p>
+                        </div>
+                        <div className="flex sm:flex-col items-center sm:items-end gap-2 sm:gap-0 sm:ml-6">
+                          <span className="text-sm text-muted-foreground sm:mb-2">
+                            {new Date(article.publishedAt).getFullYear()}
+                          </span>
+                          <ArrowUpRight className={`w-5 h-5 text-muted-foreground ${colors.hover} transition-colors`} />
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {article.tags.slice(0, 4).map((tag, tagIndex) => (
+                          <span key={tagIndex} className="text-xs text-muted-foreground">
+                            {tag}{tagIndex < Math.min(article.tags.length, 4) - 1 && <span className="mx-1">•</span>}
+                          </span>
+                        ))}
+                      </div>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
-          </section> */}
+          </section>
 
           {/* Speaking Section */}
           <section id="speaking" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-5xl">
-              <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-8 lg:mb-12 animate-fade-up">Speaking & Workshops</h2>
+              <h2 className={`text-sm uppercase tracking-wider mb-8 lg:mb-12 animate-fade-up transition-colors ${activeSection === 'speaking' ? 'text-pink' : 'text-muted-foreground'}`}>Speaking & Workshops</h2>
 
               {/* Image Modal */}
               {selectedTalk && (
@@ -766,7 +794,7 @@ export default function Home() {
           </section>
 
           {/* Contact Section */}
-          <section id="contact" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
+          {/* <section id="contact" className="px-4 sm:px-8 lg:px-16 py-16 lg:py-20 border-t border-border">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-8 lg:mb-12">
                 <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 lg:mb-6 animate-fade-up">Get In Touch</h2>
@@ -794,7 +822,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           {/* Footer */}
           <footer className="px-4 sm:px-8 lg:px-16 py-8 lg:py-12 border-t border-border">

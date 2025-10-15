@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowUpRight, Send, CheckCircle, AlertCircle } from "lucide-react"
+import { Send, CheckCircle, AlertCircle } from "lucide-react"
 
 interface FormData {
   name: string
@@ -141,7 +141,7 @@ export function ContactForm() {
           className={`w-full px-4 py-3 bg-card border rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-cyan ${
             errors.email ? 'border-red' : 'border-border focus:border-cyan'
           }`}
-          placeholder="your@email.com"
+          placeholder="your.email@example.com"
         />
         {errors.email && (
           <div className="flex items-center gap-2 mt-1 text-sm text-red">
@@ -209,14 +209,7 @@ export function ContactForm() {
 
       <div className="text-center">
         <p className="text-sm text-muted">
-          Or email me directly at{' '}
-          <a
-            href="mailto:hello@guilhermepozo.com"
-            className="text-cyan hover:text-cyan/80 transition-colors inline-flex items-center gap-1"
-          >
-            hello@guilhermepozo.com
-            <ArrowUpRight className="w-3 h-3" />
-          </a>
+          I typically respond within 24 hours
         </p>
       </div>
     </form>
