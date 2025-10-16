@@ -623,27 +623,17 @@ export default function Home() {
 
               <div className="space-y-8">
                 {featuredArticles.map((article, index) => {
-                  const isExternalLink = article.id === 'gaming-blog-career-foundation'
-                  const articleHref = isExternalLink
-                    ? 'https://www.linkedin.com/pulse/how-15-year-olds-gaming-blog-became-foundation-my-career-pozo-mgztf'
-                    : `/blog/${article.slug}`
-
-                  const getCategoryColors = (category: string) => {
-                    switch (category) {
-                      case 'Technical':
-                        return { bg: 'bg-cyan/10', text: 'text-cyan', hover: 'group-hover:text-cyan' }
-                      case 'AI/ML':
-                        return { bg: 'bg-orange/10', text: 'text-orange', hover: 'group-hover:text-orange' }
-                      case 'Career':
-                        return { bg: 'bg-yellow/10', text: 'text-yellow', hover: 'group-hover:text-yellow' }
-                      case 'Leadership':
-                        return { bg: 'bg-purple/10', text: 'text-purple', hover: 'group-hover:text-purple' }
-                      default:
-                        return { bg: 'bg-purple/10', text: 'text-purple', hover: 'group-hover:text-purple' }
-                    }
+                  // Map article IDs to their external URLs
+                  const externalLinks: Record<string, string> = {
+                    'gaming-blog-career-foundation': 'https://www.linkedin.com/pulse/how-15-year-olds-gaming-blog-became-foundation-my-career-pozo-mgztf',
+                    'architectural-decision-analytics-platform': 'https://www.linkedin.com/pulse/architectural-decision-analytics-platform-guilherme-pozo',
+                    'introduction-to-blockchain': 'https://medium.com/@guilhermepozoti/introdu%C3%A7%C3%A3o-ao-blockchain-408ef2e750d4'
                   }
 
-                  const colors = getCategoryColors(article.category)
+                  const isExternalLink = article.id in externalLinks
+                  const articleHref = isExternalLink
+                    ? externalLinks[article.id]
+                    : `/blog/${article.slug}`
 
                   return (
                     <Link
@@ -662,7 +652,7 @@ export default function Home() {
                       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2 flex-wrap">
-                            <span className={`px-2 py-1 ${colors.bg} ${colors.text} rounded-full text-xs whitespace-nowrap`}>
+                            <span className="px-2 py-1 bg-orange/10 text-orange rounded-full text-xs whitespace-nowrap">
                               {article.category}
                             </span>
                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -670,7 +660,7 @@ export default function Home() {
                               {article.readTime} min read
                             </div>
                           </div>
-                          <h3 className={`text-lg font-medium text-foreground ${colors.hover} transition-colors mb-2`}>
+                          <h3 className="text-lg font-medium text-foreground group-hover:text-orange transition-colors mb-2">
                             {article.title}
                           </h3>
                           <p className="text-comment text-sm leading-relaxed">
@@ -681,7 +671,7 @@ export default function Home() {
                           <span className="text-sm text-muted-foreground sm:mb-2">
                             {new Date(article.publishedAt).getFullYear()}
                           </span>
-                          <ArrowUpRight className={`w-5 h-5 text-muted-foreground ${colors.hover} transition-colors`} />
+                          <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-orange transition-colors" />
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3">
