@@ -738,12 +738,6 @@ export default function Home() {
                     onClick={handleCardClick}
                     className={`group relative border border-border rounded-lg overflow-hidden transition-all duration-300 cursor-pointer hover:border-pink/50 hover:scale-[1.01] h-full flex flex-col ${visibleSections.has('speaking') ? `animate-fade-up animate-delay-${(index + 1) * 100}` : 'opacity-0'}`}
                   >
-                    {/* Interactive indicator badge - mobile only */}
-                    <div className="absolute top-2 right-2 sm:hidden transition-opacity duration-300 z-10">
-                      <div className="flex items-center gap-1 px-2 py-1 bg-pink/10 text-pink rounded-full text-xs">
-                        <ArrowUpRight className="w-3 h-3" />
-                      </div>
-                    </div>
 
                     {/* Talk card content */}
                     <div className="p-4 lg:p-6 flex-1 flex flex-col">
