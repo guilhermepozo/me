@@ -14,12 +14,32 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
+    id: 'jnj-vision-engineering-manager',
+    title: 'Software Engineering Manager',
+    company: { name: 'Johnson & Johnson | Vision', link: 'https://www.jnj.com/' },
+    location: 'São Paulo, Brazil',
+    startDate: '2025-12',
+    current: true,
+    type: 'Full-time',
+    description: [
+      'Lead and mentor engineering teams within Johnson & Johnson Vision, driving technical excellence and team development.',
+      'Define and execute technical strategy, ensuring alignment with organizational goals and innovation initiatives.',
+      'Foster a culture of collaboration, continuous improvement, and engineering best practices.',
+      'Oversee architecture decisions and guide teams in building scalable, high-performance systems.',
+    ],
+    achievements: [
+      'Leading engineering teams in delivering innovative solutions for the Vision business unit'
+    ],
+    technologies: ['Next.js', 'React', 'TypeScript', 'Python', 'DDD', 'Terraform', 'Kubernetes', 'AWS', 'Serverless', 'PostgreSQL', 'DynamoDB', 'OpenTelemetry']
+  },
+  {
     id: 'jnj-senior-swe',
     title: 'Senior Software Engineer',
     company: { name: 'Johnson & Johnson', link: 'https://www.jnj.com/' },
     location: 'São José dos Campos, São Paulo, Brazil',
     startDate: '2023-07',
-    current: true,
+    endDate: '2025-11',
+    current: false,
     type: 'Full-time',
     description: [
       'Technical Leader and Architect within the Digital & Full Stack LATAM chapter, driving technical strategy, architecture, and innovation across multiple engineering domains.',

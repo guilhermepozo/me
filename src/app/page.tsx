@@ -331,12 +331,11 @@ export default function Home() {
             <div className="max-w-3xl animate-fade-up">
               <div className="text-sm text-yellow mb-4 animate-fade-in animate-delay-100">Hey there, I'm Pozo</div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 lg:mb-8 leading-tight text-balance animate-fade-up animate-delay-200">
-                Building <span className="gradient-text">scalable cloud applications</span> and AI-powered solutions
+                Leading <span className="gradient-text">high-performing engineering teams</span> to build innovative solutions
               </h1>
               <p className="text-lg lg:text-xl text-comment leading-relaxed mb-6 lg:mb-8 animate-fade-up animate-delay-300">
-                Currently leading Digital & Full Stack LATAM at <Link href="https://www.jnj.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">Johnson & Johnson <ArrowUpRight className="w-4 h-4" /></Link>,
-                where I architect cloud solutions, drive DevOps excellence, and pioneer AI/Agentic automation across the
-                software development lifecycle.
+                Engineering Manager at <Link href="https://www.jnj.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline inline-flex items-center gap-1">Johnson & Johnson | Vision <ArrowUpRight className="w-4 h-4" /></Link>,
+                where I lead high-performing teams in the development of scalable cloud applications, drive engineering excellence, and spearhead innovative digital solutions. My focus is on empowering Vision to reach new heights through cutting-edge technologies and strategic leadership.
               </p>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 animate-fade-up animate-delay-400">
                 <Link href="#experience" className="btn-primary text-center">
