@@ -70,8 +70,8 @@ export default function Home() {
         })
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -10% 0px'
+        threshold: 0.05, // Reduced threshold for better mobile detection
+        rootMargin: '0px 0px -5% 0px' // Less aggressive margin for mobile
       }
     )
 
@@ -81,7 +81,27 @@ export default function Home() {
       if (element) observer.observe(element)
     })
 
-    return () => observer.disconnect()
+    // Initial check for sections already in viewport (important for mobile and direct navigation)
+    const checkInitialVisibility = () => {
+      sections.forEach((sectionId) => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          const isVisible = rect.top < window.innerHeight && rect.bottom >= 0
+          if (isVisible) {
+            setVisibleSections((prev) => new Set(prev).add(sectionId))
+          }
+        }
+      })
+    }
+
+    // Run initial check after a short delay to ensure DOM is ready
+    const timer = setTimeout(checkInitialVisibility, 100)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(timer)
+    }
   }, [])
 
   // Separate useEffect for mobile menu scroll closing
